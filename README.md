@@ -1,6 +1,6 @@
 #Frontend for My First Game (With Rails backend)
 
-# Link for Backend repository.
+Link to backend: https://github.com/ts-miller/first-game-backend
 
 Installation Instructions
 
