@@ -1,4 +1,4 @@
-#Frontend for My First Game (With Rails backend)
+# Frontend for My First Game (With Rails backend)
 
 Link to backend: https://github.com/ts-miller/first-game-backend
 
