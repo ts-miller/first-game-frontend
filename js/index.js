@@ -1,5 +1,6 @@
+const body = document.querySelector('body')
 const BASE_URL = "http://localhost:3000"
-const userForm = document.getElementById('user-form')
+const userForm = document.getElementById('form-container')
 let userSelect = document.querySelector('#user-select')
 let newUser = document.querySelector('#new-user')
 let currentUser
@@ -17,7 +18,7 @@ function loadFormListener() {
         .then(resp => resp.json())
         .then(user => {
             currentUser = user
-            userSelect.remove()
+            userForm.remove()
             loadGame()
         })
         .catch( error => {
