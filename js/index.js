@@ -7,26 +7,7 @@ let currentUser
 function loadFormListener() {
     userForm.addEventListener('submit', e => {
         e.preventDefault()
-        fetch('http://localhost:3000/users', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(getInfo())
-        })
-        .then(resp => resp.json())
-        .then(user => {
-            currentUser = user
-            if (user.errors) {
-                alert('Select or create a user')
-            } else {
-                userForm.remove()
-                loadGame()
-            }
-        })
-        .catch( error => {
-            console.log('Error', error)
-        })
+        API.submitUserForm()
     })
 }
 
@@ -44,16 +25,6 @@ function getInfo() {
     }
 }
 
-function loadUsersInForm() {
-    fetch(`${BASE_URL}/users`)
-        .then(resp => resp.json())
-        .then(users => {
-            for(const user of users) {
-                addUserToSelect(user)
-            }
-        })
-}
-
 function addUserToSelect(user) {
     const newOption = document.createElement('option')
     newOption.value = user.name
@@ -62,4 +33,4 @@ function addUserToSelect(user) {
 }
 
 loadFormListener()
-loadUsersInForm()
+API.loadUsersInForm()
