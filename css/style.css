@@ -1,5 +1,6 @@
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: rgb(143, 214, 255);
 }
 
 #form-container {
@@ -23,4 +24,8 @@ body {
     margin-right: auto;
     border: black;
     border-width: 3px;
+    background-color: white;
+}
+
+#game-container {
 }
