@@ -25,7 +25,7 @@ let paddleX = (canvas.width-paddleWidth)/2
 let rightPressed = false
 let leftPressed = false
 
-const brickHeight = 15
+const brickHeight = 20
 const brickWidth = 54
 bricks = [
     {x: 3, y: 3, status: true},
@@ -43,6 +43,8 @@ const startBtn = {
     width: 100,
     height: 50
 }
+
+let newLevel = []
 
 document.addEventListener("keydown", Controls.keyDownHandler, false)
 document.addEventListener("keyup", Controls.keyUpHandler, false)
@@ -65,17 +67,12 @@ function collisionY(brick) {
     }
 }
 
-
-
 function isInside(pos, rect) {
     return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.height && pos.y > rect.y
 }
 
 function gameWin() {
-    ctx.fillStyle = '#53e05a'
-    ctx.fillRect(startBtn.x, startBtn.y, 100, 50)
-    ctx.fillStyle = '#2a4c57'
-    ctx.font = "20pt sans-serif"
+    
     if (level.isLast) {
         Button.newLevel()
     } else {
@@ -116,8 +113,8 @@ function checkWin() {
 
 function loadGame() {
     console.log(`Loading game for ${currentUser.name}`)
-    ctx.fillStyle = '#ffffff'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // ctx.fillStyle = '#ffffff'
+    // ctx.fillRect(0, 0, canvas.width, canvas.height)
     body.appendChild(canvas)
     level = new Level('First Level', currentUser.name, bricks ) // TEMPORARY: WILL NEED CHANGED
     Button.start()
@@ -167,7 +164,7 @@ function gameLoop() {
     y += moveY
 }
 
-function startGame() {
+function startLoop() {
     if (!interval) {
         console.log(`Level name: ${level.name}, User: ${level.userId}, Brick Count: ${level.bricks.length}`)
         interval = setInterval(gameLoop, 17)

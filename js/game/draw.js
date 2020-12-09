@@ -28,23 +28,40 @@ class Draw {
     }
 
     static editorGrid() {
-        for(let r = 1; r < brickRows; r++) {
-            for(let c = 1; r < brickColumns; c++) {
-                const brickX = ((brickWidth*c)+5)
-                const brickY = ((brickHeight*r)+5)
+        canvas.removeEventListener('click', Event.startGame)
+        newLevel = []
+        let brickId = 0
+        for(let r = 0; r < brickRows; r++) {
+            for(let c = 0; c < brickColumns; c++) {
+                const brickX = (brickWidth*c)+3
+                const brickY = (brickHeight*r)+3
                 ctx.beginPath()
                 ctx.fillStyle = "#c29f3e"
                 ctx.fillRect(brickX-3, brickY-3, brickWidth+6, brickHeight+6)
-                ctx.fillStyle = "#ffeecf"
+                ctx.fillStyle = "#f7ebdc"
                 ctx.fillRect(brickX, brickY, brickWidth, brickHeight)
                 ctx.closePath()
+                let toggle = false
+                const newBrick = {
+                    id: brickId,
+                    x: brickX,
+                    y: brickY,
+                    status: false
+                }
+                brickId++
+                newLevel.push(newBrick)
                 canvas.addEventListener('click', evt => {
                     const mousePos = Controls.getMousePos(canvas, evt)
                     if (isInside(mousePos, {x: brickX, y: brickY, width: brickWidth, height: brickHeight})) {
-                        ctx.clearRect(0, 0, canvas.width, canvas.height)
-                        ctx.fillStyle = '#ffffff'
-                        ctx.fillRect(brickX, brickY, brickWidth, brickHeight)
-                    
+                        if (toggle) {
+                            ctx.fillStyle = "#f7ebdc"
+                            newBrick.status = false
+                        } else {
+                            ctx.fillStyle = "#fac637"
+                            newBrick.status = true
+                        }
+                        ctx.fillRect(brickX, brickY, brickWidth-3, brickHeight-3)
+                        toggle = !toggle
                         console.log("Toggled Brick")
                     }
                 })
