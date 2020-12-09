@@ -1,8 +1,6 @@
 
 canvas.height = 450
 canvas.width = 600
-let interval
-let level
 
 const brickColumns = 12
 const brickRows = 15
@@ -22,18 +20,18 @@ let leftPressed = false
 const brickHeight = 20
 const brickWidth = 50
 bricks = [
-    {x: 0, y: 0, status: true},
-    {x: 50, y: 0, status: true},
-    {x: 100, y: 0, status: true},
-    {x: 150, y: 0, status: true},
-    {x: 200, y: 0, status: true},
-    {x: 250, y: 0, status: true},
-    {x: 300, y: 0, status: true},
-    {x: 350, y: 0, status: true},
-    {x: 400, y: 0, status: true},
-    {x: 450, y: 0, status: true},
-    {x: 500, y: 0, status: true},
-    {x: 550, y: 0, status: true}
+    {x: 0, y: 0, status: 1},
+    {x: 50, y: 0, status: 1},
+    {x: 100, y: 0, status: 1},
+    {x: 150, y: 0, status: 1},
+    {x: 200, y: 0, status: 1},
+    {x: 250, y: 0, status: 1},
+    {x: 300, y: 0, status: 1},
+    {x: 350, y: 0, status: 1},
+    {x: 400, y: 0, status: 1},
+    {x: 450, y: 0, status: 1},
+    {x: 500, y: 0, status: 1},
+    {x: 550, y: 0, status: 1}
 ]
 const startBtn = {
     x: (canvas.width/2 - 50),

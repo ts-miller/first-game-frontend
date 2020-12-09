@@ -5,6 +5,7 @@ class Event {
         if (isInside(mousePos, startBtn)) {
             console.log("clicked start")
             ctx.clearRect(0, 0, canvas.width, canvas.height)
+            levelNum = 0
             startLoop()
         }
     }
@@ -13,13 +14,13 @@ class Event {
         const mousePos = Input.getMousePos(canvas, event)
         if (isInside(mousePos, startBtn)) {
             console.log("clicked reset")
-            interval = 0
-            x = canvas.width/2
-            y = canvas.height-30
-            ballDX = 2
-            ballDY = -2
+            gameInterval = 0
+            ballX = canvas.width/2
+            ballY = canvas.height-paddleHeight-ballRadius
+            // ballDX = 2
+            // ballDY = -2
             paddleX = (canvas.width-paddleWidth)/2
-            resetBricks()
+            Level.resetBricks()
             startLoop()
         }
     }
@@ -28,13 +29,14 @@ class Event {
         const mousePos = Input.getMousePos(canvas, event)
         if (isInside(mousePos, startBtn)) {
             console.log("clicked next")
-            interval = 0
+            gameInterval = 0
             ballX = canvas.width/2
             ballY = canvas.height-30
-            ballDX = 2
-            ballDY = -2
+            ballDX++
+            ballDY--
             paddleX = (canvas.width-paddleWidth)/2
             console.log("Next Level!") // Actually need to iterate through levels
+            levelNum++
             resetBricks()
             startLoop()
         }
@@ -45,7 +47,7 @@ class Event {
         if (isInside(mousePos, startBtn)) {
             console.log("clicked new")
             editorBricks = []
-            interval = 0
+            gameInterval = 0
             ballX = canvas.width/2
             ballY = canvas.height-30
             ballDX = 2

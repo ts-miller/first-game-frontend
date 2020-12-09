@@ -1,9 +1,9 @@
 class Level {
     static all =[]
 
-    constructor(name, userId, bricks) {
+    constructor(name, userName, bricks) {
         this.name = name
-        this.userId = userId
+        this.userName = userName
         this.bricks = bricks
         Level.all.push(this)
     }
@@ -19,20 +19,20 @@ class Level {
                 const newBrick = {
                     x: brickX,
                     y: brickY,
-                    status: false
+                    status: 0
                 }
                 editorBricks.push(newBrick)
                 canvas.addEventListener('click', event => {
                     const mousePos = Input.getMousePos(canvas, event)
                     if (isInside(mousePos, {x: brickX, y: brickY, width: brickWidth, height: brickHeight})) {
-                        if (newBrick.status) {
+                        if (!!newBrick.status) {                 // CREATE CASE FOR DIFFERENT BLOCKS
                             Draw.clearBrick(brickX, brickY)
                             // ctx.fillStyle = "#f7ebdc"
-                            newBrick.status = false
+                            newBrick.status = 0
                         } else {
                             Draw.fillBrick(brickX, brickY)
                             // ctx.fillStyle = "#fac637"
-                            newBrick.status = true
+                            newBrick.status = 1
                         }
                         // ctx.fillRect(brickX, brickY, brickWidth-3, brickHeight-3)
                         console.log("Toggled Brick")
@@ -53,7 +53,7 @@ class Level {
             }
         }
         for (const brick of editorBricks) {
-            brick.status = false // Reset bricks
+            brick.status = 0 // Reset bricks
         }
     }
 
@@ -64,7 +64,13 @@ class Level {
             }
         }
         for (const brick of editorBricks) {
-            brick.status = true // Turns on every brick
+            brick.status = 1 // Turns on every brick
+        }
+    }
+
+    static resetBricks() { // LEVEL METHOD
+        for(const b of currentLevel.bricks) {
+            b.status = 1
         }
     }
 }

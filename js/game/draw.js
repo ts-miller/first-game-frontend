@@ -8,7 +8,7 @@ class Draw {
     }
 
     static bricks() {
-        for(const brick of level.bricks) {
+        for(const brick of currentLevel.bricks) {
             if (brick.status) {
                 this.fillBrick(brick.x, brick.y)
             }
@@ -24,7 +24,7 @@ class Draw {
 
     static clearBrick(x, y) {
         ctx.beginPath()
-        ctx.fillStyle = '#856d2a' //"#c29f3e"
+        ctx.fillStyle = '#856d2a'
         ctx.fillRect(x, y, brickWidth, brickHeight)
         ctx.fillStyle = "#f7ebdc"
         ctx.fillRect(x+1.5, y+1.5, brickWidth-3, brickHeight-3)

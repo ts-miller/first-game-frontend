@@ -10,6 +10,10 @@ canvas.id = "game-window"
 
 let editorBricks = []
 
+let gameInterval
+let levelNum = 0
+let currentLevel
+
 document.addEventListener("keydown", Input.keyDownHandler, false)
 document.addEventListener("keyup", Input.keyUpHandler, false)
 
@@ -37,38 +41,32 @@ function isInside(pos, rect) {
 
 function gameWin() {
     
-    if (level.isLast) {
+    if (currentLevel.isLast) {
         Button.newLevel()
     } else {
         Button.nextLevel()
     }
-    clearInterval(interval)
-}
-
-function resetBricks() { // LEVEL METHOD
-    for(const b of level.bricks) {
-        b.status = true
-    }
+    clearInterval(gameInterval)
 }
 
 function collisionDetection() {
-    level.bricks.some( b => {
-        if (b.status) {
+    currentLevel.bricks.some( b => {
+        if (!!b.status) {
             if (collisionY(b)) {
                 ballDY = -ballDY
-                b.status = false
+                b.status = 0
                 return true
             } else if (collisionX(b)) {
                 ballDX = -ballDX
                 b.status = false
-                return true
+                return 0
             }
         }
     })
 }
 
 function checkWin() {
-    if (level.bricks.every(brick => !brick.status)) {
+    if (currentLevel.bricks.every(brick => !brick.status)) {
         gameWin()
     }
 }
@@ -79,8 +77,14 @@ function loadGame() {
     console.log(`Loading game for ${currentUser.name}`)
     gameContainer.appendChild(canvas)
     // Fetch & build all levels from backend
-    level = new Level('First Level', currentUser.name, bricks ) // TESTING PURPOSES: WILL NEED CHANGED
-    Button.newLevel()
+    fetch(`${BASE_URL}/levels`)
+        .then(resp => resp.json())
+        .then(lvls => {
+            for(const l of lvls) {
+                new Level(l.name, l.user.name, l.bricks)
+            }
+        })
+    Button.start()
 }
 
 function gameLoop() {
@@ -98,12 +102,14 @@ function gameLoop() {
     }
     if (ballY + ballDY < ballRadius) {
         ballDY = -ballDY
-    } else if (ballY + ballDY > canvas.height-ballRadius-paddleHeight) {
+    }
+
+    if (ballY + ballDY > canvas.height-ballRadius-paddleHeight) {
         if (ballX > paddleX && ballX < paddleX+paddleWidth) {
             ballDY = -ballDY
         } else if (ballY + ballDY > canvas.height-ballRadius) {
             Button.restart()
-            clearInterval(interval)
+            clearInterval(gameInterval)
         }
     }
 
@@ -128,8 +134,9 @@ function gameLoop() {
 }
 
 function startLoop() {
-    if (!interval) {
-        console.log(`Level name: ${level.name}, User: ${level.userId}, Brick Count: ${level.bricks.length}`)
-        interval = setInterval(gameLoop, 17)
+    if (!gameInterval) {
+        currentLevel = Level.all[levelNum]
+        console.log(`Level name: ${currentLevel.name}, User: ${currentLevel.userName}, Brick Count: ${currentLevel.bricks.length}`)
+        gameInterval = setInterval(gameLoop, 17)
     }
 }
