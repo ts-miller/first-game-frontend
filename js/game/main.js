@@ -1,4 +1,12 @@
 
+const body = document.querySelector('body')
+const gameContainer = document.createElement('DIV')
+gameContainer.id = "game-container"
+
+const canvas = document.createElement("canvas")
+const ctx = canvas.getContext("2d")
+canvas.id = "game-window"
+
 let editorBricks = []
 
 document.addEventListener("keydown", Controls.keyDownHandler, false)
@@ -71,7 +79,7 @@ function loadGame() {
     body.appendChild(canvas)
     // Fetch & build all levels from backend
     level = new Level('First Level', currentUser.name, bricks ) // TESTING PURPOSES: WILL NEED CHANGED
-    Button.start()
+    Button.newLevel()
 }
 
 function gameLoop() {

@@ -1,12 +1,6 @@
-const body = document.querySelector('body')
-const gameContainer = document.createElement('DIV')
-gameContainer.id = "game-container"
 
-const canvas = document.createElement("canvas")
-const ctx = canvas.getContext("2d")
 canvas.height = 450
 canvas.width = 600
-canvas.id = "game-window"
 let interval
 let level
 

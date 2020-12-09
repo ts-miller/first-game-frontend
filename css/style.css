@@ -1,6 +1,6 @@
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    background-color: rgb(143, 214, 255);
+    background-color: #404040;
 }
 
 #form-container {
@@ -14,8 +14,9 @@ body {
     position: absolute;
     top: 50%;
     height: 50%;
-    background-color: aquamarine;
+    background-color: #3813a9;
     padding: 20px;
+    color: white;
 }
 
 #game-window {
@@ -24,7 +25,7 @@ body {
     margin-right: auto;
     border: black;
     border-width: 3px;
-    background-color: white;
+    background-image: url(/images/background.jpg);
 }
 
 #game-container {
