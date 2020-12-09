@@ -1,4 +1,4 @@
-class Controls {
+class Input {
 
     static keyDownHandler(e) {
         if (e.key == "ArrowRight") {

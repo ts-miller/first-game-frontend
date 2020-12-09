@@ -35,4 +35,27 @@ class Button {
         ctx.fillText("NEXT", canvas.width/2-43, canvas.height/2+9)
         canvas.addEventListener('click', Event.setupNextLevel)
     }
+
+    static editorControls() {
+            const clearBtn = document.createElement('button')
+            const finishedBtn = document.createElement('button')
+            const fillBtn = document.createElement('button')
+            clearBtn.innerText = "CLEAR"
+            finishedBtn.innerText = "SUBMIT"
+            fillBtn.innerText = "FILL"
+
+            const editorBtns = [clearBtn, finishedBtn, fillBtn]
+            for(const btn of editorBtns) {
+                btn.addEventListener('click', Event.controlsHandler)
+            }
+            
+
+            const buttonBox = document.createElement('DIV')
+            buttonBox.className = "center"
+            buttonBox.appendChild(clearBtn)
+            buttonBox.appendChild(fillBtn)
+            buttonBox.appendChild(finishedBtn)
+
+            gameContainer.appendChild(buttonBox)
+    }
 }

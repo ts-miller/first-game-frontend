@@ -1,7 +1,7 @@
 class Event {
 
     static startGame(event) {
-        const mousePos = Controls.getMousePos(canvas, event)
+        const mousePos = Input.getMousePos(canvas, event)
         if (isInside(mousePos, startBtn)) {
             console.log("clicked start")
             ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -10,7 +10,7 @@ class Event {
     }
 
     static resetGame(event) {
-        const mousePos = Controls.getMousePos(canvas, event)
+        const mousePos = Input.getMousePos(canvas, event)
         if (isInside(mousePos, startBtn)) {
             console.log("clicked reset")
             interval = 0
@@ -25,7 +25,7 @@ class Event {
     }
 
     static setupNextLevel(event) {
-        const mousePos = Controls.getMousePos(canvas, event)
+        const mousePos = Input.getMousePos(canvas, event)
         if (isInside(mousePos, startBtn)) {
             console.log("clicked next")
             interval = 0
@@ -41,7 +41,7 @@ class Event {
     }
 
     static triggerLevelEditor(event) {  
-        const mousePos = Controls.getMousePos(canvas, event)
+        const mousePos = Input.getMousePos(canvas, event)
         if (isInside(mousePos, startBtn)) {
             console.log("clicked new")
             editorBricks = []
@@ -60,5 +60,21 @@ class Event {
         canvas.removeEventListener('click', Event.resetGame)
         canvas.removeEventListener('click', Event.setupNextLevel)
         canvas.removeEventListener('click', Event.triggerLevelEditor)
+    }
+
+    static controlsHandler(e) {
+        switch (e.target.innerText) {
+            case "CLEAR":
+                console.log("You clicked CLEAR")
+                Level.clearBrickField()
+                break
+            case "FILL":
+                console.log("You clicked FILL")
+                Level.fillBrickField()
+                break
+            case "SUBMIT":
+                console.log("You clicked SUBMIT")
+                break
+        }
     }
 }

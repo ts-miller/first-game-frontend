@@ -10,12 +10,7 @@ class Draw {
     static bricks() {
         for(const brick of level.bricks) {
             if (brick.status) {
-                ctx.beginPath()
-                ctx.fillStyle = "#c29f3e"
-                ctx.fillRect(brick.x-3, brick.y-3, brickWidth+6, brickHeight+6) // border
-                ctx.fillStyle = "#fac637"
-                ctx.fillRect(brick.x, brick.y, brickWidth, brickHeight)
-                ctx.closePath()
+                this.fillBrick(brick.x, brick.y)
             }
         }
     }
@@ -27,12 +22,21 @@ class Draw {
         ctx.closePath()
     }
 
-    static editorGrid(x, y) {
+    static clearBrick(x, y) {
         ctx.beginPath()
-        ctx.fillStyle = "#c29f3e"
-        ctx.fillRect(x-3, y-3, brickWidth+6, brickHeight+6)
-        ctx.fillStyle = "#f7ebdc"
+        ctx.fillStyle = '#856d2a' //"#c29f3e"
         ctx.fillRect(x, y, brickWidth, brickHeight)
+        ctx.fillStyle = "#f7ebdc"
+        ctx.fillRect(x+1.5, y+1.5, brickWidth-3, brickHeight-3)
+        ctx.closePath()
+    }
+
+    static fillBrick(x, y) {
+        ctx.beginPath()
+        ctx.fillStyle = "#856d2a"
+        ctx.fillRect(x, y, brickWidth, brickHeight)
+        ctx.fillStyle = "#fac637"
+        ctx.fillRect(x+1.5, y+1.5, brickWidth-3, brickHeight-3)
         ctx.closePath()
     }
 }

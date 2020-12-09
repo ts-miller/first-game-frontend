@@ -9,33 +9,32 @@ class Level {
     }
 
     static setupEditor() {
+        Button.editorControls()
         Event.clearEvents()
-        let brickId = 0
         for(let r = 0; r < brickRows; r++) { // Iterate through each row
             for(let c = 0; c < brickColumns; c++) { // Iterate through each column
-                const brickX = (brickWidth*c)+3
-                const brickY = (brickHeight*r)+3
-                Draw.editorGrid(brickX, brickY)
-                let toggle = false
+                const brickX = brickWidth*c
+                const brickY = brickHeight*r
+                Draw.clearBrick(brickX, brickY)
                 const newBrick = {
                     x: brickX,
                     y: brickY,
                     status: false
                 }
-                brickId++
                 editorBricks.push(newBrick)
                 canvas.addEventListener('click', event => {
-                    const mousePos = Controls.getMousePos(canvas, event)
+                    const mousePos = Input.getMousePos(canvas, event)
                     if (isInside(mousePos, {x: brickX, y: brickY, width: brickWidth, height: brickHeight})) {
-                        if (toggle) {
-                            ctx.fillStyle = "#f7ebdc"
+                        if (newBrick.status) {
+                            Draw.clearBrick(brickX, brickY)
+                            // ctx.fillStyle = "#f7ebdc"
                             newBrick.status = false
                         } else {
-                            ctx.fillStyle = "#fac637"
+                            Draw.fillBrick(brickX, brickY)
+                            // ctx.fillStyle = "#fac637"
                             newBrick.status = true
                         }
-                        ctx.fillRect(brickX, brickY, brickWidth-3, brickHeight-3)
-                        toggle = !toggle
+                        // ctx.fillRect(brickX, brickY, brickWidth-3, brickHeight-3)
                         console.log("Toggled Brick")
                     }
                 })
@@ -45,5 +44,27 @@ class Level {
 
     isLast() {
         return !!(this == Level.all[Level.all.length-1])
+    }
+
+    static clearBrickField() {
+        for(let r = 0; r < brickRows; r++) { // Iterate through each row
+            for(let c = 0; c < brickColumns; c++) { // Iterate through each column
+                Draw.clearBrick(brickWidth*c, brickHeight*r)
+            }
+        }
+        for (const brick of editorBricks) {
+            brick.status = false // Reset bricks
+        }
+    }
+
+    static fillBrickField() {
+        for(let r = 0; r < brickRows; r++) { // Iterate through each row
+            for(let c = 0; c < brickColumns; c++) { // Iterate through each column
+                Draw.fillBrick(brickWidth*c, brickHeight*r)
+            }
+        }
+        for (const brick of editorBricks) {
+            brick.status = true // Turns on every brick
+        }
     }
 }
