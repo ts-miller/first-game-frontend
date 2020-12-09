@@ -24,7 +24,7 @@ class Button {
         ctx.fillStyle = '#2a4c57'
         ctx.font = "20pt sans-serif"
         ctx.fillText("NEW", canvas.width/2-32, canvas.height/2+9)
-        canvas.addEventListener('click', Event.setupLevelEditor)
+        canvas.addEventListener('click', Event.triggerLevelEditor)
     }
     
     static nextLevel() {
