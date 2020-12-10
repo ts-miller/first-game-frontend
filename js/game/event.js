@@ -17,9 +17,10 @@ class Event {
             gameInterval = 0
             ballX = canvas.width/2
             ballY = canvas.height-paddleHeight-ballRadius
-            // ballDX = 2
-            // ballDY = -2
+            ballDX = 2+levelNum
+            ballDY = -2+levelNum
             paddleX = (canvas.width-paddleWidth)/2
+            paddleVel = 0
             Level.resetBricks()
             startLoop()
         }
@@ -35,6 +36,7 @@ class Event {
             ballDX++
             ballDY--
             paddleX = (canvas.width-paddleWidth)/2
+            paddleVel = 0
             console.log("Next Level!") // Actually need to iterate through levels
             levelNum++
             resetBricks()
@@ -53,6 +55,7 @@ class Event {
             ballDX = 2
             ballDY = -2
             paddleX = (canvas.width-paddleWidth)/2
+            paddleVel = 0
             Level.setupEditor()
         }
     }
@@ -75,6 +78,7 @@ class Event {
                 Level.fillBrickField()
                 break
             case "SUBMIT":
+                testlevel = new Level(name, currentUser)
                 console.log("You clicked SUBMIT")
                 break
         }

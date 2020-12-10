@@ -23,4 +23,28 @@ class Input {
             y: event.clientY - rect.top
         }
     }
+
+    static checkForKeyPress() {
+        if (rightPressed) {
+            if (paddleX + paddleWidth > canvas.width) {
+                paddleX = canvas.width - paddleWidth
+                paddleVel = 0
+            } else {
+                (paddleVel <= paddleVelMax) ? paddleVel += paddleAcc : paddleVel = paddleVelMax
+            }
+        } else if (leftPressed) {
+            if (paddleX < 0) {
+                paddleX = 0
+                paddleVel = 0
+            } else {
+                (paddleVel >= -paddleVelMax) ? paddleVel -= paddleAcc : paddleVel = -paddleVelMax
+            }
+        } else {
+            if (paddleVel > 0) {
+                paddleVel -= paddleAcc
+            } else if (paddleVel < 0) {
+                paddleVel += paddleAcc
+            }
+        }
+    }
 }
