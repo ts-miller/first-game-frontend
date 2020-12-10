@@ -5,6 +5,7 @@ gameContainer.id = "game-container"
 body.appendChild(gameContainer)
 
 let editorBricks = []
+let testingNewLevel
 
 let gameInterval
 let levelNum = 0
@@ -41,7 +42,6 @@ function isInside(pos, rect) {
 function loadGame() {
     console.log(`Loading game for ${currentUser.name}`)
     gameContainer.appendChild(canvas)
-    // Fetch & build all levels from backend
     fetch(`${BASE_URL}/levels`)
         .then(resp => resp.json())
         .then(lvls => {
@@ -49,18 +49,18 @@ function loadGame() {
                 new Level(l.name, l.user.name, l.bricks)
             }
         })
-    Button.start()
+    Button.newLevel()
 }
 
 function gameLoop() {
     ctx.clearRect(0,0, canvas.width, canvas.height)
     Draw.ball()
     Draw.paddle()
+    Draw.bricks()
     Collision.checkBallBrick()
     Collision.checkBallWall()
     Collision.checkBallPaddle()
     Level.checkWin()
-    Draw.bricks()
     Input.checkForKeyPress()
  
     ballX += ballDX
@@ -70,7 +70,6 @@ function gameLoop() {
 
 function startLoop() {
     if (!gameInterval) {
-        currentLevel = Level.all[levelNum]
         console.log(`Level name: ${currentLevel.name}, User: ${currentLevel.userName}, Brick Count: ${currentLevel.bricks.length}`)
         gameInterval = setInterval(gameLoop, 17)
     }

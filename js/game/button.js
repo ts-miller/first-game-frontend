@@ -36,6 +36,15 @@ class Button {
         canvas.addEventListener('click', Event.setupNextLevel)
     }
 
+    static confirmNewLevel() {
+        ctx.fillStyle = '#53e05a'
+        ctx.fillRect(startBtn.x, startBtn.y, 100, 50)
+        ctx.fillStyle = '#2a4c57'
+        ctx.font = "16pt sans-serif"
+        ctx.fillText("CONFIRM", canvas.width/2-43, canvas.height/2+9)
+        canvas.addEventListener('click', Event.submitLevel)
+    }
+
     static editorControls() {
             const clearBtn = document.createElement('button')
             const finishedBtn = document.createElement('button')
@@ -48,14 +57,12 @@ class Button {
             for(const btn of editorBtns) {
                 btn.addEventListener('click', Event.controlsHandler)
             }
-            
-
             const buttonBox = document.createElement('DIV')
+            buttonBox.id = 'button-box'
             buttonBox.className = "center"
             buttonBox.appendChild(clearBtn)
             buttonBox.appendChild(fillBtn)
             buttonBox.appendChild(finishedBtn)
-
             gameContainer.appendChild(buttonBox)
     }
 }

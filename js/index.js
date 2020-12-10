@@ -1,4 +1,3 @@
-const BASE_URL = "http://localhost:3000"
 const userForm = document.getElementById('form-container')
 let userSelect = document.querySelector('#user-select')
 let newUser = document.querySelector('#new-user')

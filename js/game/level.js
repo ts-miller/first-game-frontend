@@ -12,29 +12,6 @@ class Level {
         Button.editorControls()
         Event.clearEvents()
         this.createBrickField()
-        // for(let r = 0; r < brickRows; r++) { // Iterate through each row
-        //     for(let c = 0; c < brickColumns; c++) { // Iterate through each column
-        //         Draw.clearBrick(brickWidth*c, brickHeight*r)
-        //         const newBrick = {
-        //             x: brickWidth*c,
-        //             y: brickHeight*r,
-        //             status: 0
-        //         }
-        //         editorBricks.push(newBrick)
-        //         canvas.addEventListener('click', event => {
-        //             const mousePos = Input.getMousePos(canvas, event)
-        //             if (isInside(mousePos, {x: brickX, y: brickY, width: brickWidth, height: brickHeight})) {
-        //                 if (!!newBrick.status) {                 // CREATE CASE FOR DIFFERENT BLOCKS
-        //                     Draw.clearBrick(brickX, brickY)
-        //                     newBrick.status = 0
-        //                 } else {
-        //                     Draw.fillBrick(brickX, brickY)
-        //                     newBrick.status = 1
-        //                 }
-        //             }
-        //         })
-        //     }
-        // }
     }
 
     isLast() {
@@ -97,12 +74,21 @@ class Level {
 
     static checkWin() {
         if (currentLevel.bricks.every(brick => !brick.status)) {
-            if (currentLevel.isLast) {
+            if (testingNewLevel) {
+                Button.confirmNewLevel()
+            } else if (currentLevel.isLast) {
                 Button.newLevel()
             } else {
                 Button.nextLevel()
             }
             clearInterval(gameInterval)
         }
+    }
+
+    static playtestNewLevel() {
+        testingNewLevel = true
+        const packedBricks = editorBricks.filter(brick => brick.status === 1)
+        currentLevel = new Level("Test Level", currentUser.name, packedBricks)
+        startLoop()
     }
 }

@@ -6,6 +6,8 @@ class Event {
             console.log("clicked start")
             ctx.clearRect(0, 0, canvas.width, canvas.height)
             levelNum = 0
+            currentLevel = Level.all[levelNum]
+            testingNewLevel = false
             startLoop()
         }
     }
@@ -17,8 +19,8 @@ class Event {
             gameInterval = 0
             ballX = canvas.width/2
             ballY = canvas.height-paddleHeight-ballRadius
-            ballDX = 2+levelNum
-            ballDY = -2+levelNum
+            ballDX = Math.cos(0.5/2*Math.PI)*ballVel+(levelNum/2)
+            ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)-(levelNum/2)
             paddleX = (canvas.width-paddleWidth)/2
             paddleVel = 0
             Level.resetBricks()
@@ -33,13 +35,13 @@ class Event {
             gameInterval = 0
             ballX = canvas.width/2
             ballY = canvas.height-30
-            ballDX++
-            ballDY--
+            ballVel += 0.5 // Increase difficulty by increasing ball speed
+            ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
+            ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
             paddleX = (canvas.width-paddleWidth)/2
             paddleVel = 0
-            console.log("Next Level!") // Actually need to iterate through levels
             levelNum++
-            resetBricks()
+            currentLevel = Level.all[levelNum]
             startLoop()
         }
     }
@@ -52,11 +54,20 @@ class Event {
             gameInterval = 0
             ballX = canvas.width/2
             ballY = canvas.height-30
-            ballDX = 2
-            ballDY = -2
+            ballVel += 0.5
+            ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
+            ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
             paddleX = (canvas.width-paddleWidth)/2
             paddleVel = 0
             Level.setupEditor()
+        }
+    }
+
+    static setupSubmitLevel(event) {
+        const mousePos = Input.getMousePos(canvas, event)
+        if (isInside(mousePos, startBtn)) {
+            document.querySelector('#button-box').remove()
+            API.submitLevel()
         }
     }
 
@@ -70,16 +81,13 @@ class Event {
     static controlsHandler(e) {
         switch (e.target.innerText) {
             case "CLEAR":
-                console.log("You clicked CLEAR")
                 Level.clearBrickField()
                 break
             case "FILL":
-                console.log("You clicked FILL")
                 Level.fillBrickField()
                 break
             case "SUBMIT":
-                testlevel = new Level(name, currentUser)
-                console.log("You clicked SUBMIT")
+                Level.playtestNewLevel()
                 break
         }
     }
