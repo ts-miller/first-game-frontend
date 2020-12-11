@@ -13,7 +13,8 @@ let brickBorderColor = '#856d2a'
 let brickFillColor = '#fac637'
 
 const ballRadius = 7
-let ballVel = 5
+let ballVel = 4
+let difIncrement = 0.2
 let ballColor = '#ffffff'
 
 const paddleHeight = 10

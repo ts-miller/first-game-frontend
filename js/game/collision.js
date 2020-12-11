@@ -6,11 +6,9 @@ class Collision {
                 if (this.collisionY(b)) {
                     ballDY = -ballDY
                     b.status = 0
-                    return true
                 } else if (this.collisionX(b)) {
                     ballDX = -ballDX
-                    b.status = false
-                    return 0
+                    b.status = 0
                 }
             }
         })
@@ -32,25 +30,23 @@ class Collision {
                 ballDX = Math.sin(ballAngle) * ballVel
                 ballDY = -Math.cos(ballAngle) * ballVel
             } else if (ballY + ballDY > canvas.height-ballRadius) {
-                Button.restart()
+                Button.retry()
                 clearInterval(gameInterval)
             }
         }
     }
 
     static collisionX(brick) {
-        if (ballY+ballRadius > brick.y && ballY-ballRadius < brick.y+brickHeight) {
-            return ballX+ballRadius > brick.x && ballX-ballRadius < brick.x+brickWidth
-        } else {
-            return false
-        }
+        return (ballX + ballRadius + ballDX > brick.x &&
+                ballX - ballRadius + ballDX < brick.x + brickWidth &&
+                ballY + ballRadius > brick.y &&
+                ballY < brick.y + brickHeight)
     }
     
     static collisionY(brick) {
-        if (ballX+ballRadius > brick.x && ballX-ballRadius < brick.x+brickWidth) {
-            return ballY+ballRadius > brick.y && ballY-ballRadius < brick.y+brickHeight
-        } else {
-            return false
-        }
+        return (ballX + ballRadius > brick.x &&
+                ballX < brick.x + brickWidth &&
+                ballY + ballRadius + ballDY > brick.y &&
+                ballY + ballDY < brick.y + brickHeight)
     }
 }

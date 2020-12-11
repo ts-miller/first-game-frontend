@@ -6,6 +6,9 @@ class Input {
         } else if (e.key == "ArrowLeft") {
             leftPressed = true
         }
+        if (e.keyCode == 32) {
+            launched = true
+        }
     }
     
     static keyUpHandler(e) {

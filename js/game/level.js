@@ -1,21 +1,29 @@
 class Level {
-    static all =[]
 
-    constructor(name, userName, bricks) {
+    constructor(name, user, bricks) {
         this.name = name
-        this.userName = userName
+        this.user = user
         this.bricks = bricks
-        Level.all.push(this)
+        allLevels.push(this)
     }
 
     static setupEditor() {
+        Button.removeAllChildNodes(buttonBox)
         Button.editorControls()
         Event.clearEvents()
+        gameInterval = 0
+        ballX = canvas.width/2
+        ballY = canvas.height-30
+        editorBricks = []
+        ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
+        ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
+        paddleX = (canvas.width-paddleWidth)/2
+        paddleVel = 0
         this.createBrickField()
     }
 
     isLast() {
-        return !!(this == Level.all[Level.all.length-1])
+        return !!(this == allLevels[allLevels.length-1])
     }
 
     static clearBrickField() {
@@ -50,33 +58,35 @@ class Level {
                     status: 0
                 }
                 editorBricks.push(newBrick)
-                canvas.addEventListener('click', event => {
-                    const mousePos = Input.getMousePos(canvas, event)
-                    if (isInside(mousePos, {x: brickWidth*c, y: brickHeight*r, width: brickWidth, height: brickHeight})) {
-                        if (!!newBrick.status) {                 // CREATE CASE FOR DIFFERENT BLOCKS
-                            Draw.clearBrick(brickWidth*c, brickHeight*r)
-                            newBrick.status = 0
-                        } else {
-                            Draw.fillBrick(brickWidth*c, brickHeight*r)
-                            newBrick.status = 1
-                        }
-                    }
+                canvas.addEventListener('click', e => {
+                    Event.toggleBrick(e, newBrick)
                 })
             }
         }
     }
 
-    static resetBricks() { // LEVEL METHOD
-        for(const b of currentLevel.bricks) {
+    resetBricks() { // LEVEL METHOD
+        for(const b of this.bricks) {
             b.status = 1
         }
+    }
+
+    static resetBallAndPaddle() {
+        ballX = canvas.width/2
+        ballY = canvas.height-18
+        ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
+        ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
+        paddleX = (canvas.width-paddleWidth)/2
+        paddleVel = 0
     }
 
     static checkWin() {
         if (currentLevel.bricks.every(brick => !brick.status)) {
             if (testingNewLevel) {
-                Button.confirmNewLevel()
-            } else if (currentLevel.isLast) {
+                Event.clearEvents() // This method doesn't seem to be working here.
+                Button.removeAllChildNodes(buttonBox)
+                Button.confirmationButtons()
+            } else if (currentLevel.isLast()) {
                 Button.newLevel()
             } else {
                 Button.nextLevel()
@@ -86,9 +96,10 @@ class Level {
     }
 
     static playtestNewLevel() {
+        alert("Get ready to play your level!")
         testingNewLevel = true
         const packedBricks = editorBricks.filter(brick => brick.status === 1)
-        currentLevel = new Level("Test Level", currentUser.name, packedBricks)
+        currentLevel = new Level(levelNameField.value, currentUser, packedBricks)
         startLoop()
     }
 }

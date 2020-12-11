@@ -17,6 +17,7 @@ class API {
                 alert('Select or create a user')
             } else {
                 userForm.remove()
+                gameContainer.appendChild(canvas)
                 loadGame()
             }
         })
@@ -36,17 +37,41 @@ class API {
     }
 
     static submitLevel() {
-        debugger
+        for (const brick of currentLevel.bricks) {
+            brick.status = 1
+        }
         fetch(`${BASE_URL}/levels`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(currentLevel)
+            body: JSON.stringify({level: {
+                name: currentLevel.name,
+                user_id: currentLevel.user.id
+                }
+            })
         })
         .then(resp => resp.json())
-        .then(level => {
-            debugger
+        .then(levelData => {
+            for(const brick of currentLevel.bricks) {
+                brick.level_id = levelData.id
+            }
+            fetch(`${BASE_URL}/bricks`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({bricks: currentLevel.bricks})
+            })
+            .then(resp => resp.json())
+            .then( brickData => {
+                alert('Your Level has been submitted. Click Start to Play again!')
+                Button.removeAllChildNodes(buttonBox)
+                gameInterval = 0
+                loadGame()
+            })
+            .catch(error => console.log(error))
         })
+        .catch(error => console.log(error))
     }
 }
