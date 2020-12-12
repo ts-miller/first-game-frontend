@@ -1,5 +1,5 @@
 
-const body = document.querySelector('body')
+const body = document.querySelector('.wrapper')
 const gameContainer = document.createElement('DIV')
 gameContainer.id = "game-container"
 body.appendChild(gameContainer)
@@ -26,7 +26,7 @@ let allLevels
 let launched
 
 let ballX = canvas.width/2
-let ballY = canvas.height-30
+let ballY = canvas.height-50
 let ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
 let ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
 let paddleX = (canvas.width-paddleWidth)/2
@@ -35,6 +35,8 @@ const defBallVelocity = ballVel
 
 let rightPressed = false
 let leftPressed = false
+
+// Audio
 
 document.addEventListener("keydown", Input.keyDownHandler, false)
 document.addEventListener("keyup", Input.keyUpHandler, false)
@@ -56,6 +58,7 @@ function loadGame() {
                 new Level(l.name, l.user.name, l.bricks)
             }
         })
+    // gameMusic.play()
     Button.start()
 }
 
@@ -63,8 +66,8 @@ function gameLoop() {
     ctx.clearRect(0,0, canvas.width, canvas.height)
     Draw.ball()
     Draw.paddle()
-    Draw.bricks()
     Collision.checkBallBrick()
+    Draw.bricks()
     Collision.checkBallWall()
     Collision.checkBallPaddle()
     Level.checkWin()
@@ -81,8 +84,10 @@ function gameLoop() {
 
 function startLoop() {
     if (!gameInterval) {
-        console.log(`Level name: ${currentLevel.name}, User: ${currentLevel.userName}, Brick Count: ${currentLevel.bricks.length}`)
+        console.log(`Level name: ${currentLevel.name}, User: ${currentLevel.user}, Brick Count: ${currentLevel.bricks.length}`)
         launched = false
+        levelStartSound.play()
+        setTimeout( () => launched = true, 6000)
         gameInterval = setInterval(gameLoop, 17)
     }
 }

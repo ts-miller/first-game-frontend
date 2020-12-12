@@ -6,9 +6,11 @@ class Collision {
                 if (this.collisionY(b)) {
                     ballDY = -ballDY
                     b.status = 0
+                    brickHitSound.sound.cloneNode(true).play()
                 } else if (this.collisionX(b)) {
                     ballDX = -ballDX
                     b.status = 0
+                    brickHitSound.sound.cloneNode(true).play()
                 }
             }
         })
@@ -17,21 +19,26 @@ class Collision {
     static checkBallWall() {
         if (ballX + ballDX > canvas.width-ballRadius || ballX + ballDX < ballRadius) {
             ballDX = -ballDX
+            wallHitSound.sound.cloneNode(true).play()
         }
         if (ballY + ballDY < ballRadius) {
             ballDY = -ballDY
+            wallHitSound.sound.cloneNode(true).play()
+        }
+        if (ballY + ballDY > canvas.height-ballRadius) {
+            Button.retry()
+            clearInterval(gameInterval)
+            deathSound.play()
         }
     }
 
     static checkBallPaddle() {
-        if (ballY + ballDY > canvas.height-ballRadius-paddleHeight) {
+        if (ballY + ballDY > canvas.height-ballRadius-paddleHeight-paddleFloat && ballY + ballDY < canvas.height-paddleFloat) {
             if (ballX > paddleX && ballX < paddleX+paddleWidth) {
                 ballAngle = ((ballX-paddleX)/paddleWidth-0.5)/2*Math.PI
                 ballDX = Math.sin(ballAngle) * ballVel
                 ballDY = -Math.cos(ballAngle) * ballVel
-            } else if (ballY + ballDY > canvas.height-ballRadius) {
-                Button.retry()
-                clearInterval(gameInterval)
+                paddleHitSound.play()
             }
         }
     }

@@ -16,10 +16,14 @@ class Draw {
     }
 
     static paddle() {
-        ctx.beginPath()
         ctx.fillStyle = paddleColor
-        ctx.fillRect(paddleX, canvas.height-paddleHeight, paddleWidth, paddleHeight)
-        ctx.closePath()
+        ctx.strokeStyle = paddleColor
+        ctx.lineJoin = "round";
+        ctx.lineWidth = paddleRadius;
+        ctx.strokeRect(paddleX+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat+(paddleRadius/2), 
+                            paddleWidth-paddleRadius, paddleHeight-paddleRadius);
+        ctx.fillRect(paddleX+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat+(paddleRadius/2), 
+                            paddleWidth-paddleRadius, paddleHeight-paddleRadius);
     }
 
     static clearBrick(x, y) {

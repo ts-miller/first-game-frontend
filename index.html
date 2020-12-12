@@ -9,25 +9,32 @@
   <meta name="author" content="SitePoint">
 
   <link rel="stylesheet" href="css/style.css">
+  <!-- <link rel="shortcut icon" href=""> -->
 
 </head>
 
 <body>
-<div id="form-container">
-    <form id="user-form">
-        <label for="user">Users:</label>
-        <select name="user" id="user-select">
-            <option selected disabled value="">Select a User</option>
-        </select><br><br>
-        <label for="new-user">New User:</label>
-        <input name="new-user" id="new-user"><br><br>
+    <div class="wrapper">
+        <img src='/images/galaxy_break_logo.png' id='logo'>
+        <div id="form-container">
+            <form id="user-form">
+                <h2>Who Are You?</h2>
+                <label for="user">Users:</label>
+                <select name="user" id="user-select">
+                    <option selected disabled value="">Select a User</option>
+                </select><br>
+                <span>OR</span><br>
+                <label for="new-user">New User:</label>
+                <input name="new-user" id="new-user"><br><br>
 
-        <input type="submit">
-    </form>
-</div>
+                <input type="submit">
+            </form>
+        </div>
+    </div>
 
 
 </body>
+    <script src="js/game/sound.js"></script>
     <script src="js/API.js"></script>
     <script src="js/index.js"></script>
     <script src="js/game/event.js"></script>

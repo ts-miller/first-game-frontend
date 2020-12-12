@@ -73,7 +73,7 @@ class Level {
 
     static resetBallAndPaddle() {
         ballX = canvas.width/2
-        ballY = canvas.height-18
+        ballY = canvas.height-ballRadius-paddleHeight-paddleFloat
         ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
         ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
         paddleX = (canvas.width-paddleWidth)/2

@@ -3,12 +3,12 @@ body {
     background-color: #404040;
 }
 
-button {
+button, input[type=submit] {
     background-color: midnightblue;
     color: mintcream;
     font-weight: bold;
     font-size: 16px;
-    margin: 10px 20px 10px 20px;
+    margin: 10px 10px 10px 10px;
     padding: 15px;
     border: none;
     border-radius: 20px;
@@ -21,17 +21,19 @@ label, span {
 #form-container {
     display: flex;
     justify-content: center;
-    height: 300px;
     position: relative;
 }
 
 #user-form {
-    position: absolute;
-    top: 50%;
-    height: 50%;
-    background-color: #3813a9;
-    padding: 20px;
+    /* position: absolute; */
+    width: 350px;
+    text-align: center;
+    background-color: #A31494;
+    padding: 20px 0 40px 0;
     color: white;
+    border-radius: 5px;
+    border-color: navy;
+    border-width: 5px;
 }
 
 #game-window {
@@ -42,7 +44,27 @@ label, span {
     background-image: url(/images/background.jpg);
 }
 
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+}
+
 .center {
     display: block;
     text-align: center;
+}
+
+.wrapper {
+    background: #191933;
+    -mox-box-shadow: 0 0 10px rgba(0,0,0,.3);
+    -webkit-box-shadow: 0 0 10px rgba(0,0,0,.3);
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    margin: auto;
+    max-width: 750px;
+    padding: 1%; /* 18px / 800px */
+    width: 85%;
+    height: 90vh;
+    border-radius: 5px;
 }
