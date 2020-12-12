@@ -17,6 +17,7 @@ body.appendChild(buttonBox)
 
 let editorBricks = []
 let testingNewLevel
+let currentLives = startingLives
 
 let gameInterval
 let levelNum = 0
@@ -24,14 +25,17 @@ let currentLevel
 let ballAngle
 let allLevels
 let launched
+let score
 
+const hudHeight = 35
+let ballVel = defBallVel
 let ballX = canvas.width/2
-let ballY = canvas.height-50
+let ballY = canvas.height-hudHeight-paddleHeight-ballRadius
 let ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
 let ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
 let paddleX = (canvas.width-paddleWidth)/2
 let paddleVel = 0
-const defBallVelocity = ballVel
+
 
 let rightPressed = false
 let leftPressed = false
@@ -58,7 +62,8 @@ function loadGame() {
                 new Level(l.name, l.user.name, l.bricks)
             }
         })
-    // gameMusic.play()
+    gameMusic.play()
+    gameMusic.sound.volume = 0.5
     Button.start()
 }
 
@@ -72,6 +77,7 @@ function gameLoop() {
     Collision.checkBallPaddle()
     Level.checkWin()
     Input.checkForKeyPress()
+    Draw.hud()
     paddleX += paddleVel
     if (launched) {
         ballX += ballDX

@@ -6,7 +6,8 @@ class Event {
         levelNum = 0
         currentLevel = allLevels[levelNum]
         testingNewLevel = false
-        ballVel = defBallVelocity
+        ballVel = defBallVel
+        score = 0
         currentLevel.resetBricks()
         Level.resetBallAndPaddle()
         Button.removeAllChildNodes(buttonBox)

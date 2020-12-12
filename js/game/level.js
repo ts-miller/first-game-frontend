@@ -73,7 +73,7 @@ class Level {
 
     static resetBallAndPaddle() {
         ballX = canvas.width/2
-        ballY = canvas.height-ballRadius-paddleHeight-paddleFloat
+        ballY = canvas.height-ballRadius-paddleHeight-paddleFloat-hudHeight
         ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
         ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
         paddleX = (canvas.width-paddleWidth)/2
@@ -91,6 +91,7 @@ class Level {
             } else {
                 Button.nextLevel()
             }
+            winLevelSound.play()
             clearInterval(gameInterval)
         }
     }
@@ -100,6 +101,7 @@ class Level {
         testingNewLevel = true
         const packedBricks = editorBricks.filter(brick => brick.status === 1)
         currentLevel = new Level(levelNameField.value, currentUser, packedBricks)
+        this.resetBallAndPaddle()
         startLoop()
     }
 }

@@ -5,6 +5,8 @@ canvas.id = "game-window"
 canvas.height = 500
 canvas.width = 500
 
+const startingLives = 3
+
 const brickColumns = 10
 const brickRows = 15
 const brickHeight = 20
@@ -13,7 +15,7 @@ let brickBorderColor = '#856d2a'
 let brickFillColor = '#fac637'
 
 const ballRadius = 5
-let ballVel = 3
+const defBallVel = 3
 let difIncrement = 0.2
 let ballColor = '#ffffff'
 

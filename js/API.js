@@ -12,7 +12,7 @@ class API {
         })
         .then(resp => resp.json())
         .then(user => {
-            currentUser = user
+            currentUser = new User(user.id, user.name, user.high_score)
             if (user.errors) {
                 alert('Select or create a user')
             } else {

@@ -19,10 +19,10 @@ class Sound {
 }
 
 const gameMusic = new Sound('/sounds/music/background1.mp3', true)
-gameMusic.volume = 0.8
 const paddleHitSound = new Sound('/sounds/sfx/paddle-hit.wav')
 const brickHitSound = new Sound('/sounds/sfx/brick-hit.wav')
 const wallHitSound = new Sound('/sounds/sfx/wall-hit.wav')
 const deathSound = new Sound('/sounds/sfx/death.wav')
 const gameOverSound = new Sound('/sounds/sfx/game-over.wav')
 const levelStartSound = new Sound('/sounds/sfx/level-begin.wav')
+const winLevelSound = new Sound('/sounds/sfx/win-level.wav')

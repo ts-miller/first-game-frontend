@@ -20,9 +20,9 @@ class Draw {
         ctx.strokeStyle = paddleColor
         ctx.lineJoin = "round";
         ctx.lineWidth = paddleRadius;
-        ctx.strokeRect(paddleX+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat+(paddleRadius/2), 
+        ctx.strokeRect(paddleX+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat-hudHeight+(paddleRadius/2), 
                             paddleWidth-paddleRadius, paddleHeight-paddleRadius);
-        ctx.fillRect(paddleX+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat+(paddleRadius/2), 
+        ctx.fillRect(paddleX+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat-hudHeight+(paddleRadius/2), 
                             paddleWidth-paddleRadius, paddleHeight-paddleRadius);
     }
 
@@ -42,5 +42,15 @@ class Draw {
         ctx.fillStyle = brickFillColor
         ctx.fillRect(x+1.5, y+1.5, brickWidth-3, brickHeight-3)
         ctx.closePath()
+    }
+
+    static hud() {
+        ctx.beginPath()
+        ctx.fillStyle = "#0f0f0f"
+        ctx.fillRect(0, canvas.height-hudHeight, canvas.width, hudHeight)
+        ctx.fillStyle = "#ffffff"
+        ctx.font = '30px Veranda'
+        ctx.fillText(`Score: ${score}`, 8, canvas.height-8)
+        ctx.closePath
     }
 }
