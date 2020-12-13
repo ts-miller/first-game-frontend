@@ -6,8 +6,16 @@ class Input {
         } else if (e.key == "ArrowLeft") {
             leftPressed = true
         }
-        if (e.keyCode == 32) {
+        if (e.code == "Space" && gameInterval) {
             launched = true
+        }
+        if (e.key == "p" && gameInterval) {
+            paused = !paused
+            if (paused) {
+                gameMusic.sound.volume = 0.1
+            } else {
+                gameMusic.sound.volume = 0.5
+            }
         }
     }
     
@@ -27,7 +35,7 @@ class Input {
         }
     }
 
-    static checkForKeyPress() {
+    static checkForArrowPress() {
         if (rightPressed) {
             if (paddleX + paddleWidth > canvas.width) {
                 paddleX = canvas.width - paddleWidth

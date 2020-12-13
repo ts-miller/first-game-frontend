@@ -26,6 +26,18 @@ class Draw {
                             paddleWidth-paddleRadius, paddleHeight-paddleRadius);
     }
 
+    static pause() {
+        ctx.textAlign = 'center'
+        ctx.font = '50px monospace'
+        ctx.fillText('Paused', canvas.width/2, canvas.height/2)
+    }
+
+    static gameOver() {
+        ctx.textAlign = 'center'
+        ctx.font = '50px monospace'
+        ctx.fillText('Game Over', canvas.width/2, canvas.height/2)
+    }
+
     static clearBrick(x, y) {
         ctx.beginPath()
         ctx.fillStyle = brickBorderColor
@@ -46,11 +58,17 @@ class Draw {
 
     static hud() {
         ctx.beginPath()
+        ctx.textAlign = 'start'
         ctx.fillStyle = "#0f0f0f"
         ctx.fillRect(0, canvas.height-hudHeight, canvas.width, hudHeight)
         ctx.fillStyle = "#ffffff"
-        ctx.font = '30px Veranda'
+        ctx.font = "30px monospace"
         ctx.fillText(`Score: ${score}`, 8, canvas.height-8)
-        ctx.closePath
+        ctx.fillText(`Lives: ${currentLives}`, canvas.width/2+100, canvas.height-8)
+        ctx.font = "14px monospace"
+        ctx.textAlign = 'center'
+        ctx.fillText(`"${currentLevel.name}"`, canvas.width/2, canvas.height-21)
+        ctx.fillText(`User: ${currentLevel.user}`, canvas.width/2, canvas.height-5)
+        ctx.closePath()
     }
 }

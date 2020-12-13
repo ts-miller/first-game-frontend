@@ -7,11 +7,13 @@ class Collision {
                     ballDY = -ballDY
                     b.status = 0
                     score += 100
+                    ballVel += brickHitVelInc
                     brickHitSound.sound.cloneNode(true).play()
                 } else if (this.collisionX(b)) {
                     ballDX = -ballDX
                     b.status = 0
                     score += 100
+                    ballVel += brickHitVelInc
                     brickHitSound.sound.cloneNode(true).play()
                 }
             }
@@ -34,21 +36,39 @@ class Collision {
                 clearInterval(gameInterval)
                 setTimeout(() => Event.retryLevel(), 2500)
             } else {
-                alert("GAME OVER!")
-                deathSound.play()
+                gameOverSound.play()
+                Draw.gameOver()
                 clearInterval(gameInterval)
                 Button.start()
+                if (currentUser.highScore < score) {
+                    fetch(`${BASE_URL}/users/${currentUser.id}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({user: {
+                            id: currentUser.id,
+                            high_score: score
+                        }
+                        })
+                    })
+                    .then(resp => resp.json())
+                    .then(user => {
+                        debugger
+                        currentUser = new User()
+                    })
+                }
             }
         }
     }
 
     static checkBallPaddle() {
-        if (ballY + ballDY > canvas.height-ballRadius-paddleHeight-paddleFloat-hudHeight && ballY + ballDY < canvas.height-paddleFloat) {
+        if (ballY + ballDY > canvas.height-ballRadius-paddleHeight-paddleFloat-hudHeight && ballY < canvas.height-ballRadius-paddleFloat-hudHeight) {
             if (ballX > paddleX && ballX < paddleX+paddleWidth) {
                 ballAngle = ((ballX-paddleX)/paddleWidth-0.5)/2*Math.PI
                 ballDX = Math.sin(ballAngle) * ballVel
                 ballDY = -Math.cos(ballAngle) * ballVel
-                paddleHitSound.play()
+                paddleHitSound.sound.cloneNode(true).play()
             }
         }
     }

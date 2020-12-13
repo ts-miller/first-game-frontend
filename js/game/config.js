@@ -18,11 +18,12 @@ const ballRadius = 5
 const defBallVel = 3
 let difIncrement = 0.2
 let ballColor = '#ffffff'
+const brickHitVelInc = 0.01
 
 const paddleHeight = 10
 const paddleWidth = 75
 const paddleFloat = 20
 const paddleRadius = 10
 let paddleVelMax = 6
-let paddleAcc = 1
+let paddleAcc = 1.5
 let paddleColor = '#ff4040'

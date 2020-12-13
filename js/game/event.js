@@ -5,10 +5,12 @@ class Event {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         levelNum = 0
         currentLevel = allLevels[levelNum]
+        currentLives = startingLives
         testingNewLevel = false
         ballVel = defBallVel
         score = 0
         currentLevel.resetBricks()
+        gameInterval = 0
         Level.resetBallAndPaddle()
         Button.removeAllChildNodes(buttonBox)
         startLoop()
@@ -27,7 +29,7 @@ class Event {
         console.log("clicked next")
         gameInterval = 0
         levelNum++
-        ballVel += difIncrement
+        ballVel += defBallVel + (levelNum*difIncrement)
         Level.resetBallAndPaddle()
         currentLevel = allLevels[levelNum]
         Button.removeAllChildNodes(buttonBox)

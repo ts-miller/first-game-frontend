@@ -1,4 +1,5 @@
 
+const wrapper = document.querySelector('.wrapper')
 const body = document.querySelector('.wrapper')
 const gameContainer = document.createElement('DIV')
 gameContainer.id = "game-container"
@@ -9,15 +10,20 @@ const fillBtn = document.createElement('BUTTON')
 const nameLabel = document.createElement('LABEL')
 const levelNameField = document.createElement('INPUT')
 levelNameField.id = "level-name"
+const gameControls = document.createElement('p')
+gameControls.setAttribute('style', 'white-space: pre; text-align: center; margin-top: 8px;')
+gameControls.innerText = 'Paddle Movement: Arrow Left/Right \r\n Launch Ball: Space \r\n Pause: P'
 
 const buttonBox = document.createElement('DIV')
 buttonBox.id = 'button-box'
-buttonBox.className = "center"
+buttonBox.className = 'center'
+buttonBox.style.height = '68px'
 body.appendChild(buttonBox)
 
 let editorBricks = []
 let testingNewLevel
 let currentLives = startingLives
+let paused = false
 
 let gameInterval
 let levelNum = 0
@@ -54,6 +60,7 @@ function isInside(pos, rect) {
 
 function loadGame() {
     console.log(`Loading game for ${currentUser.name}`)
+    wrapper.appendChild(gameControls)
     allLevels = []
     fetch(`${BASE_URL}/levels`)
         .then(resp => resp.json())
@@ -73,19 +80,22 @@ function gameLoop() {
     Draw.paddle()
     Collision.checkBallBrick()
     Draw.bricks()
+    Draw.hud()
     Collision.checkBallWall()
     Collision.checkBallPaddle()
     Level.checkWin()
-    Input.checkForKeyPress()
-    Draw.hud()
-    paddleX += paddleVel
-    if (launched) {
-        ballX += ballDX
-        ballY += ballDY
+    if (!paused) {
+        Input.checkForArrowPress()
+        paddleX += paddleVel
+        if (launched) {
+            ballX += ballDX
+            ballY += ballDY
+        } else {
+            ballX = paddleX + paddleWidth/2
+        }
     } else {
-        ballX = paddleX + paddleWidth/2
+        Draw.pause()
     }
-    
 }
 
 function startLoop() {
