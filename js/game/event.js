@@ -78,7 +78,11 @@ class Event {
                 Level.fillBrickField()
                 break
             case "SUBMIT":
-                Level.playtestNewLevel()
+                if (editorBricks.filter(b => b.status === 1).length >= 10) {
+                    Level.playtestNewLevel()
+                } else {
+                    alert("You need to add at least 10 bricks to submit!")
+                }
                 break
             case "YES":
                 API.submitLevel()

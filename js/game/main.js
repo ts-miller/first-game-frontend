@@ -31,7 +31,7 @@ let currentLevel
 let ballAngle
 let allLevels
 let launched
-let score
+let score = 0
 
 const hudHeight = 35
 let ballVel = defBallVel
@@ -71,7 +71,7 @@ function loadGame() {
         })
     gameMusic.play()
     gameMusic.sound.volume = 0.5
-    Button.start()
+    Button.newLevel()
 }
 
 function gameLoop() {
