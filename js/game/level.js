@@ -99,8 +99,9 @@ class Level {
     static playtestNewLevel() {
         alert("Get ready to play your level!")
         testingNewLevel = true
+        gameInterval = 0
         const packedBricks = editorBricks.filter(brick => brick.status === 1)
-        currentLevel = new Level(levelNameField.value, currentUser, packedBricks)
+        currentLevel = new Level(levelNameField.value, currentUser.name, packedBricks)
         this.resetBallAndPaddle()
         startLoop()
     }

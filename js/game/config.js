@@ -18,7 +18,7 @@ const ballRadius = 5
 const defBallVel = 3
 let difIncrement = 0.2
 let ballColor = '#ffffff'
-const brickHitVelInc = 0.01
+const brickHitVelInc = 0.02
 
 const paddleHeight = 10
 const paddleWidth = 75

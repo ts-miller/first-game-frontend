@@ -6,8 +6,11 @@ class Input {
         } else if (e.key == "ArrowLeft") {
             leftPressed = true
         }
-        if (e.code == "Space" && gameInterval) {
-            launched = true
+        if (e.code == "Space") {
+            e.preventDefault()
+            if (gameInterval) {
+                launched = true
+            }
         }
         if (e.key == "p" && gameInterval) {
             paused = !paused

@@ -29,7 +29,7 @@ class Event {
         console.log("clicked next")
         gameInterval = 0
         levelNum++
-        ballVel += defBallVel + (levelNum*difIncrement)
+        ballVel = defBallVel + (levelNum*difIncrement)
         Level.resetBallAndPaddle()
         currentLevel = allLevels[levelNum]
         Button.removeAllChildNodes(buttonBox)
@@ -38,7 +38,8 @@ class Event {
 
     static triggerLevelEditor(event) {  
         console.log("clicked new")
-        ballVel += difIncrement
+        levelNum++
+        ballVel = defBallVel + (levelNum*difIncrement)
         Level.setupEditor()
     }
 
