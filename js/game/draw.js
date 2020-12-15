@@ -10,7 +10,7 @@ class Draw {
     static bricks() {
         for(const brick of currentLevel.bricks) {
             if (brick.status) {
-                this.fillBrick(brick.x, brick.y)
+                this.fillBrick(brick)
             }
         }
     }
@@ -38,21 +38,21 @@ class Draw {
         ctx.fillText('Game Over', canvas.width/2, canvas.height/2)
     }
 
-    static clearBrick(x, y) {
+    static clearBrick(brick) {
         ctx.beginPath()
-        ctx.fillStyle = brickBorderColor
-        ctx.fillRect(x, y, brickWidth, brickHeight)
+        ctx.fillStyle = brickBorderColor1
+        ctx.fillRect(brick.x, brick.y, brickWidth, brickHeight)
         ctx.fillStyle = "#f7ebdc"
-        ctx.fillRect(x+1.5, y+1.5, brickWidth-3, brickHeight-3)
+        ctx.fillRect(brick.x+1.5, brick.y+1.5, brickWidth-3, brickHeight-3)
         ctx.closePath()
     }
 
-    static fillBrick(x, y) {
+    static fillBrick(brick) {
         ctx.beginPath()
-        ctx.fillStyle = brickBorderColor
-        ctx.fillRect(x, y, brickWidth, brickHeight)
-        ctx.fillStyle = brickFillColor
-        ctx.fillRect(x+1.5, y+1.5, brickWidth-3, brickHeight-3)
+        ctx.fillStyle = (brick.status === 1) ? brickBorderColor1 : brickBorderColor2
+        ctx.fillRect(brick.x, brick.y, brickWidth, brickHeight)
+        ctx.fillStyle = (brick.status === 1) ? brickFillColor1 : brickFillColor2
+        ctx.fillRect(brick.x+1.5, brick.y+1.5, brickWidth-3, brickHeight-3)
         ctx.closePath()
     }
 
@@ -64,7 +64,7 @@ class Draw {
         ctx.fillStyle = "#ffffff"
         ctx.font = "30px monospace"
         ctx.fillText(`Score: ${score}`, 8, canvas.height-8)
-        ctx.fillText(`Lives: ${currentLives}`, canvas.width/2+100, canvas.height-8)
+        ctx.fillText(`Lives: ${currentUser.lives}`, canvas.width/2+100, canvas.height-8)
         ctx.font = "14px monospace"
         ctx.textAlign = 'center'
         ctx.fillText(`"${currentLevel.name}"`, canvas.width/2, canvas.height-21)

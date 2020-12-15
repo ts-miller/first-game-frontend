@@ -22,7 +22,6 @@ body.appendChild(buttonBox)
 
 let editorBricks = []
 let testingNewLevel
-let currentLives = startingLives
 let paused = false
 
 let gameInterval

@@ -4,6 +4,7 @@ class Level {
         this.name = name
         this.user = user
         this.bricks = bricks
+        this.startingBricks = bricks
         allLevels.push(this)
     }
 
@@ -27,31 +28,24 @@ class Level {
     }
 
     static clearBrickField() {
-        for(let r = 0; r < brickRows; r++) { // Iterate through each row
-            for(let c = 0; c < brickColumns; c++) { // Iterate through each column
-                Draw.clearBrick(brickWidth*c, brickHeight*r)
-            }
-        }
         for (const brick of editorBricks) {
-            brick.status = 0 // Reset bricks
+            brick.status = 0
+            Draw.clearBrick(brick)
         }
     }
 
     static fillBrickField() {
-        for(let r = 0; r < brickRows; r++) { // Iterate through each row
-            for(let c = 0; c < brickColumns; c++) { // Iterate through each column
-                Draw.fillBrick(brickWidth*c, brickHeight*r)
-            }
-        }
         for (const brick of editorBricks) {
-            brick.status = 1 // Turns on every brick
+            (brick.status) ? brick.status = 2 : brick.status = 1 // Turns on every brick
+            Draw.fillBrick(brick)
         }
     }
 
     static createBrickField() {
         for(let r = 0; r < brickRows; r++) { // Iterate through each row
             for(let c = 0; c < brickColumns; c++) { // Iterate through each column
-                Draw.clearBrick(brickWidth*c, brickHeight*r)
+                const brickBox = {x: brickWidth*c, y: brickHeight*r}
+                Draw.clearBrick(brickBox)
                 const newBrick = {
                     x: brickWidth*c,
                     y: brickHeight*r,
@@ -66,9 +60,7 @@ class Level {
     }
 
     resetBricks() { // LEVEL METHOD
-        for(const b of this.bricks) {
-            b.status = 1
-        }
+        this.bricks = this.startingBricks
     }
 
     static resetBallAndPaddle() {
@@ -83,7 +75,7 @@ class Level {
     static checkWin() {
         if (currentLevel.bricks.every(brick => !brick.status)) {
             if (testingNewLevel) {
-                Event.clearEvents() // This method doesn't seem to be working here.
+                Event.clearEvents() // This method doesn't seem to be working here but Imma leave it here JIC.
                 Button.removeAllChildNodes(buttonBox)
                 Button.confirmationButtons()
             } else if (currentLevel.isLast()) {
@@ -100,7 +92,7 @@ class Level {
         alert("Get ready to play your level!")
         testingNewLevel = true
         gameInterval = 0
-        const packedBricks = editorBricks.filter(brick => brick.status === 1)
+        const packedBricks = editorBricks.filter(brick => !!brick.status === true)
         currentLevel = new Level(levelNameField.value, currentUser.name, packedBricks)
         this.resetBallAndPaddle()
         startLoop()

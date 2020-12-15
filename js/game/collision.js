@@ -5,14 +5,15 @@ class Collision {
             if (!!b.status) {
                 if (this.collisionY(b)) {
                     ballDY = -ballDY
-                    b.status = 0
-                    score += 100
+                    b.status--
+                    currentUser.score += pointIncrement
+                    currentUser.checkFor1Up()
                     ballVel += brickHitVelInc
                     brickHitSound.sound.cloneNode(true).play()
                 } else if (this.collisionX(b)) {
                     ballDX = -ballDX
-                    b.status = 0
-                    score += 100
+                    b.status--
+                    score += pointIncrement
                     ballVel += brickHitVelInc
                     brickHitSound.sound.cloneNode(true).play()
                 }
@@ -30,8 +31,8 @@ class Collision {
             wallHitSound.sound.cloneNode(true).play()
         }
         if (ballY + ballDY > canvas.height-ballRadius-hudHeight) {
-            if (currentLives) {
-                currentLives--
+            if (currentUser.lives) {
+                currentUser.lives--
                 deathSound.play()
                 clearInterval(gameInterval)
                 setTimeout(() => Event.retryLevel(), 2500)
@@ -40,7 +41,7 @@ class Collision {
                 Draw.gameOver()
                 clearInterval(gameInterval)
                 Button.start()
-                if (currentUser.highScore < score) {
+                if (currentUser.highScore < currentUser.score) {
                     fetch(`${BASE_URL}/users/${currentUser.id}`, {
                         method: 'PATCH',
                         headers: {
@@ -48,7 +49,7 @@ class Collision {
                         },
                         body: JSON.stringify({user: {
                             id: currentUser.id,
-                            high_score: score
+                            high_score: currentUser.score
                         }
                         })
                     })

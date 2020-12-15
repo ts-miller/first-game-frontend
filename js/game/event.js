@@ -51,12 +51,18 @@ class Event {
     static toggleBrick(event, newBrick) {
         const mousePos = Input.getMousePos(canvas, event)
         if (isInside(mousePos, {x: newBrick.x, y: newBrick.y, width: brickWidth, height: brickHeight})) {
-            if (!!newBrick.status) {                 // CREATE CASE FOR DIFFERENT BLOCKS
-                Draw.clearBrick(newBrick.x, newBrick.y)
-                newBrick.status = 0
-            } else {
-                Draw.fillBrick(newBrick.x, newBrick.y)
-                newBrick.status = 1
+            switch(newBrick.status) {
+                case 0:
+                    newBrick.status = 1
+                    Draw.fillBrick(newBrick)
+                    break
+                case 1:
+                    newBrick.status = 2
+                    Draw.fillBrick(newBrick)
+                    break
+                case 2:
+                    newBrick.status = 0
+                    Draw.clearBrick(newBrick) 
             }
         }
     }
@@ -78,7 +84,7 @@ class Event {
                 Level.fillBrickField()
                 break
             case "SUBMIT":
-                if (editorBricks.filter(b => b.status === 1).length >= 10) {
+                if (editorBricks.filter(b => !!b.status === true).length >= 10) {
                     Level.playtestNewLevel()
                 } else {
                     alert("You need to add at least 10 bricks to submit!")

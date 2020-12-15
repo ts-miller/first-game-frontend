@@ -6,13 +6,17 @@ canvas.height = 500
 canvas.width = 500
 
 const startingLives = 3
+const pointIncrement = 5
+const oneUpIncrement = 500
 
 const brickColumns = 10
 const brickRows = 15
 const brickHeight = 20
 const brickWidth = 50
-let brickBorderColor = '#856d2a'
-let brickFillColor = '#fac637'
+const brickBorderColor1 = '#573502'
+const brickBorderColor2 = '#022457'
+const brickFillColor1 = '#faac37'
+const brickFillColor2 = '#3785fa'
 
 const ballRadius = 5
 const defBallVel = 3
