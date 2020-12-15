@@ -32,12 +32,8 @@ let allLevels
 let launched
 let score = 0
 
-const hudHeight = 35
-let ballVel = defBallVel
-let ballX = canvas.width/2
-let ballY = canvas.height-hudHeight-paddleHeight-ballRadius
-let ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
-let ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
+let ball
+
 let paddleX = (canvas.width-paddleWidth)/2
 let paddleVel = 0
 
@@ -70,7 +66,7 @@ function loadGame() {
         })
     gameMusic.play()
     gameMusic.sound.volume = 0.5
-    Button.newLevel()
+    Button.start()
 }
 
 function gameLoop() {
@@ -87,10 +83,10 @@ function gameLoop() {
         Input.checkForArrowPress()
         paddleX += paddleVel
         if (launched) {
-            ballX += ballDX
-            ballY += ballDY
+            ball.x += ball.dx
+            ball.y += ball.dy
         } else {
-            ballX = paddleX + paddleWidth/2
+            ball.x = paddleX + paddleWidth/2
         }
     } else {
         Draw.pause()

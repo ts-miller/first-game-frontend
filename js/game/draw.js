@@ -1,7 +1,7 @@
 class Draw {
     static ball() {
         ctx.beginPath()
-        ctx.arc(ballX, ballY, ballRadius, 0, Math.PI*2)
+        ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI*2)
         ctx.fillStyle = ballColor
         ctx.fill()
         ctx.closePath()
@@ -63,7 +63,7 @@ class Draw {
         ctx.fillRect(0, canvas.height-hudHeight, canvas.width, hudHeight)
         ctx.fillStyle = "#ffffff"
         ctx.font = "30px monospace"
-        ctx.fillText(`Score: ${score}`, 8, canvas.height-8)
+        ctx.fillText(`Score: ${currentUser.score}`, 8, canvas.height-8)
         ctx.fillText(`Lives: ${currentUser.lives}`, canvas.width/2+100, canvas.height-8)
         ctx.font = "14px monospace"
         ctx.textAlign = 'center'

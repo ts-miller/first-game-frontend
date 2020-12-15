@@ -4,17 +4,19 @@ class Collision {
         currentLevel.bricks.some( b => {
             if (!!b.status) {
                 if (this.collisionY(b)) {
-                    ballDY = -ballDY
+                    ball.dy = -ball.dy
                     b.status--
+                    // Add Powerup chance function
                     currentUser.score += pointIncrement
                     currentUser.checkFor1Up()
-                    ballVel += brickHitVelInc
+                    ball.vel += brickHitVelInc
                     brickHitSound.sound.cloneNode(true).play()
                 } else if (this.collisionX(b)) {
-                    ballDX = -ballDX
+                    ball.dx = -ball.dx
                     b.status--
+                    // Add Powerup chance function
                     score += pointIncrement
-                    ballVel += brickHitVelInc
+                    ball.vel += brickHitVelInc
                     brickHitSound.sound.cloneNode(true).play()
                 }
             }
@@ -22,15 +24,15 @@ class Collision {
     }
 
     static checkBallWall() {
-        if (ballX + ballDX > canvas.width-ballRadius || ballX + ballDX < ballRadius) {
-            ballDX = -ballDX
+        if (ball.x + ball.dx + ball.radius > canvas.width || ball.x + ball.dx < ball.radius) {
+            ball.dx = -ball.dx
             wallHitSound.sound.cloneNode(true).play()
         }
-        if (ballY + ballDY < ballRadius) {
-            ballDY = -ballDY
+        if (ball.y + ball.dy < ball.radius) {
+            ball.dy = -ball.dy
             wallHitSound.sound.cloneNode(true).play()
         }
-        if (ballY + ballDY > canvas.height-ballRadius-hudHeight) {
+        if (ball.y + ball.dy > canvas.height-ball.radius-hudHeight) {
             if (currentUser.lives) {
                 currentUser.lives--
                 deathSound.play()
@@ -64,27 +66,27 @@ class Collision {
     }
 
     static checkBallPaddle() {
-        if (ballY + ballDY > canvas.height-ballRadius-paddleHeight-paddleFloat-hudHeight && ballY < canvas.height-ballRadius-paddleFloat-hudHeight) {
-            if (ballX > paddleX && ballX < paddleX+paddleWidth) {
-                ballAngle = ((ballX-paddleX)/paddleWidth-0.5)/2*Math.PI
-                ballDX = Math.sin(ballAngle) * ballVel
-                ballDY = -Math.cos(ballAngle) * ballVel
+        if (ball.y + ball.dy > canvas.height-ball.radius-paddleHeight-paddleFloat-hudHeight && ball.y < canvas.height-ball.radius-paddleFloat-hudHeight) {
+            if (ball.x > paddleX && ball.x < paddleX+paddleWidth) {
+                const ballAngle = ((ball.x-paddleX)/paddleWidth-0.5)/2*Math.PI
+                ball.dx = Math.sin(ballAngle) * ball.vel
+                ball.dy = -Math.cos(ballAngle) * ball.vel
                 paddleHitSound.sound.cloneNode(true).play()
             }
         }
     }
 
     static collisionX(brick) {
-        return (ballX + ballRadius + ballDX > brick.x &&
-                ballX - ballRadius + ballDX < brick.x + brickWidth &&
-                ballY + ballRadius > brick.y &&
-                ballY < brick.y + brickHeight)
+        return (ball.y > brick.y &&
+                ball.y < brick.y + brickHeight &&
+                ball.x + ball.radius + ball.dx > brick.x &&
+                ball.x - ball.radius + ball.dx < brick.x + brickWidth)
     }
     
     static collisionY(brick) {
-        return (ballX + ballRadius > brick.x &&
-                ballX < brick.x + brickWidth &&
-                ballY + ballRadius + ballDY > brick.y &&
-                ballY + ballDY < brick.y + brickHeight)
+        return (ball.x > brick.x &&
+                ball.x < brick.x + brickWidth &&
+                ball.y + ball.radius + ball.dy > brick.y &&
+                ball.y - ball.radius + ball.dy < brick.y + brickHeight)
     }
 }

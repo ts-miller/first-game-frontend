@@ -4,10 +4,12 @@ canvas.id = "game-window"
 
 canvas.height = 500
 canvas.width = 500
+const hudHeight = 35
+
 
 const startingLives = 3
-const pointIncrement = 5
-const oneUpIncrement = 500
+const pointIncrement = 1
+const oneUpIncrement = 100
 
 const brickColumns = 10
 const brickRows = 15

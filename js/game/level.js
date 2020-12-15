@@ -13,11 +13,7 @@ class Level {
         Button.editorControls()
         Event.clearEvents()
         gameInterval = 0
-        ballX = canvas.width/2
-        ballY = canvas.height-30
         editorBricks = []
-        ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
-        ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
         paddleX = (canvas.width-paddleWidth)/2
         paddleVel = 0
         this.createBrickField()
@@ -64,10 +60,11 @@ class Level {
     }
 
     static resetBallAndPaddle() {
-        ballX = canvas.width/2
-        ballY = canvas.height-ballRadius-paddleHeight-paddleFloat-hudHeight
-        ballDX = Math.cos(0.5/2*Math.PI)*ballVel  // X and Y to launch at 45 degree angle at ballVel(velocity)
-        ballDY = -(Math.sin(0.5/2*Math.PI)*ballVel)
+        ball.x = canvas.width/2
+        ball.y = canvas.height-ballRadius-paddleHeight-paddleFloat-hudHeight
+        ball.vel = defBallVel + (levelNum*difIncrement)
+        ball.dx = Math.cos(0.5/2*Math.PI)*ball.vel  // X and Y to launch at 45 degree angle at ballVel(velocity)
+        ball.dy = -(Math.sin(0.5/2*Math.PI)*ball.vel)
         paddleX = (canvas.width-paddleWidth)/2
         paddleVel = 0
     }
@@ -94,6 +91,7 @@ class Level {
         gameInterval = 0
         const packedBricks = editorBricks.filter(brick => !!brick.status === true)
         currentLevel = new Level(levelNameField.value, currentUser.name, packedBricks)
+        ball = new Ball()
         this.resetBallAndPaddle()
         startLoop()
     }

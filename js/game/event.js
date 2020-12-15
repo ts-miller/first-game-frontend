@@ -3,11 +3,11 @@ class Event {
     static startGame(event) {
         console.log("clicked start")
         ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ball = new Ball()
         levelNum = 0
         currentLevel = allLevels[levelNum]
-        currentLives = startingLives
+        currentUser.lives = startingLives
         testingNewLevel = false
-        ballVel = defBallVel
         score = 0
         currentLevel.resetBricks()
         gameInterval = 0
@@ -29,7 +29,7 @@ class Event {
         console.log("clicked next")
         gameInterval = 0
         levelNum++
-        ballVel = defBallVel + (levelNum*difIncrement)
+        ball.vel = defBallVel + (levelNum*difIncrement)
         Level.resetBallAndPaddle()
         currentLevel = allLevels[levelNum]
         Button.removeAllChildNodes(buttonBox)
@@ -39,7 +39,7 @@ class Event {
     static triggerLevelEditor(event) {  
         console.log("clicked new")
         levelNum++
-        ballVel = defBallVel + (levelNum*difIncrement)
+        ball.vel = defBallVel + (levelNum*difIncrement)
         Level.setupEditor()
     }
 
