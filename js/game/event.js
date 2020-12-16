@@ -9,7 +9,7 @@ class Event {
         currentUser.lives = startingLives
         testingNewLevel = false
         score = 0
-        currentLevel.resetBricks()
+        // currentLevel.resetBricks()
         gameInterval = 0
         Level.resetBallAndPaddle()
         Button.removeAllChildNodes(buttonBox)
@@ -84,7 +84,7 @@ class Event {
                 Level.fillBrickField()
                 break
             case "SUBMIT":
-                if (editorBricks.filter(b => !!b.status === true).length >= 10) {
+                if (editorBricks.filter(b => !!b.status === true).length >= brickMin) {
                     Level.playtestNewLevel()
                 } else {
                     alert("You need to add at least 10 bricks to submit!")

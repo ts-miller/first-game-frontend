@@ -4,7 +4,6 @@ class Level {
         this.name = name
         this.user = user
         this.bricks = bricks
-        this.startingBricks = bricks
         allLevels.push(this)
     }
 
@@ -55,14 +54,13 @@ class Level {
         }
     }
 
-    resetBricks() { // LEVEL METHOD
-        this.bricks = this.startingBricks
-    }
+    // resetBricks() { // LEVEL METHOD
+    //     this.bricks = levelCopies[levelNum].bricks
+    // }
 
     static resetBallAndPaddle() {
         ball.x = canvas.width/2
         ball.y = canvas.height-ballRadius-paddleHeight-paddleFloat-hudHeight
-        ball.vel = defBallVel + (levelNum*difIncrement)
         ball.dx = Math.cos(0.5/2*Math.PI)*ball.vel  // X and Y to launch at 45 degree angle at ballVel(velocity)
         ball.dy = -(Math.sin(0.5/2*Math.PI)*ball.vel)
         paddleX = (canvas.width-paddleWidth)/2
@@ -90,7 +88,7 @@ class Level {
         testingNewLevel = true
         gameInterval = 0
         const packedBricks = editorBricks.filter(brick => !!brick.status === true)
-        currentLevel = new Level(levelNameField.value, currentUser.name, packedBricks)
+        currentLevel = new Level(levelNameField.value, currentUser, packedBricks)
         ball = new Ball()
         this.resetBallAndPaddle()
         startLoop()

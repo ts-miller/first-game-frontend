@@ -10,13 +10,17 @@ class Collision {
                     currentUser.score += pointIncrement
                     currentUser.checkFor1Up()
                     ball.vel += brickHitVelInc
+                    ball.dx = ball.dx*(ball.vel/(ball.vel-brickHitVelInc))
+                    ball.dy = ball.dy*(ball.vel/(ball.vel-brickHitVelInc))
                     brickHitSound.sound.cloneNode(true).play()
                 } else if (this.collisionX(b)) {
                     ball.dx = -ball.dx
                     b.status--
                     // Add Powerup chance function
-                    score += pointIncrement
+                    currentUser.score += pointIncrement
                     ball.vel += brickHitVelInc
+                    ball.dx = ball.dx*(ball.vel/(ball.vel-brickHitVelInc))
+                    ball.dy = ball.dy*(ball.vel/(ball.vel-brickHitVelInc))
                     brickHitSound.sound.cloneNode(true).play()
                 }
             }
@@ -42,7 +46,7 @@ class Collision {
                 gameOverSound.play()
                 Draw.gameOver()
                 clearInterval(gameInterval)
-                Button.start()
+                loadGame()
                 if (currentUser.highScore < currentUser.score) {
                     fetch(`${BASE_URL}/users/${currentUser.id}`, {
                         method: 'PATCH',

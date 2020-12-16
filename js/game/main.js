@@ -23,6 +23,7 @@ body.appendChild(buttonBox)
 let editorBricks = []
 let testingNewLevel
 let paused = false
+let levelCopies
 
 let gameInterval
 let levelNum = 0
@@ -57,13 +58,9 @@ function loadGame() {
     console.log(`Loading game for ${currentUser.name}`)
     wrapper.appendChild(gameControls)
     allLevels = []
-    fetch(`${BASE_URL}/levels`)
-        .then(resp => resp.json())
-        .then(lvls => {
-            for(const l of lvls) {
-                new Level(l.name, l.user.name, l.bricks)
-            }
-        })
+    API.fetchLevels()
+    currentUser.score = 0
+    ball = new Ball()
     gameMusic.play()
     gameMusic.sound.volume = 0.5
     Button.start()
@@ -71,6 +68,7 @@ function loadGame() {
 
 function gameLoop() {
     ctx.clearRect(0,0, canvas.width, canvas.height)
+    // PowerUp.runBuffs()
     Draw.ball()
     Draw.paddle()
     Collision.checkBallBrick()

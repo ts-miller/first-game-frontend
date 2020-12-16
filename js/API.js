@@ -36,6 +36,16 @@ class API {
         })
     }
 
+    static fetchLevels() {
+        fetch(`${BASE_URL}/levels`)
+        .then(resp => resp.json())
+        .then(lvls => {
+            for(const l of lvls) {
+                new Level(l.name, l.user, l.bricks)
+            }
+        })
+    }
+
     static submitLevel() {
         for (const brick of currentLevel.bricks) {
             brick.status = 1

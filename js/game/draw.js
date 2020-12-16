@@ -63,12 +63,13 @@ class Draw {
         ctx.fillRect(0, canvas.height-hudHeight, canvas.width, hudHeight)
         ctx.fillStyle = "#ffffff"
         ctx.font = "30px monospace"
-        ctx.fillText(`Score: ${currentUser.score}`, 8, canvas.height-8)
         ctx.fillText(`Lives: ${currentUser.lives}`, canvas.width/2+100, canvas.height-8)
         ctx.font = "14px monospace"
+        ctx.fillText(`Score: ${currentUser.score}`, 8, canvas.height-21)
+        ctx.fillText(`High-Score: ${currentUser.highScore}`, 8, canvas.height-5)
         ctx.textAlign = 'center'
         ctx.fillText(`"${currentLevel.name}"`, canvas.width/2, canvas.height-21)
-        ctx.fillText(`User: ${currentLevel.user}`, canvas.width/2, canvas.height-5)
+        ctx.fillText(`Author: ${currentLevel.user.name}`, canvas.width/2, canvas.height-5)
         ctx.closePath()
     }
 }

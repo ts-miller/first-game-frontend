@@ -8,11 +8,9 @@ class Ball {
         this.radius = ballRadius
     }
 
-    get angle() {
-        return ((this.x-paddleX)/paddleWidth-0.5)/2*Math.PI
-    }
-
-    set angle(newAngle) {
-        this.angle = newAngle
+    setBrickBounceXY() {
+        let ballAngle = Math.atan(-this.dy/this.dx)
+        this.dx = Math.sin(ballAngle) * this.vel
+        this.dy = -Math.cos(ballAngle) * this.vel
     }
 }
