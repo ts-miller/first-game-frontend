@@ -7,7 +7,9 @@ class Input {
             leftPressed = true
         }
         if (e.code == "Space") {
-            e.preventDefault()
+            if (e.target.tagName !== 'INPUT') {
+                e.preventDefault()
+            }
             if (gameInterval) {
                 launched = true
             }

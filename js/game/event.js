@@ -3,13 +3,13 @@ class Event {
     static startGame(event) {
         console.log("clicked start")
         ctx.clearRect(0, 0, canvas.width, canvas.height)
-        ball = new Ball()
+        // ball = new Ball()
+        // paddle = new Paddle()
         levelNum = 0
         currentLevel = allLevels[levelNum]
         currentUser.lives = startingLives
         testingNewLevel = false
         score = 0
-        // currentLevel.resetBricks()
         gameInterval = 0
         Level.resetBallAndPaddle()
         Button.removeAllChildNodes(buttonBox)

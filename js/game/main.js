@@ -12,13 +12,13 @@ const levelNameField = document.createElement('INPUT')
 levelNameField.id = "level-name"
 const gameControls = document.createElement('p')
 gameControls.setAttribute('style', 'white-space: pre; text-align: center; margin-top: 8px;')
-gameControls.innerText = 'Paddle Movement: Arrow Left/Right \r\n Launch Ball: Space \r\n Pause: P'
 
 const buttonBox = document.createElement('DIV')
 buttonBox.id = 'button-box'
 buttonBox.className = 'center'
 buttonBox.style.height = '68px'
 body.appendChild(buttonBox)
+wrapper.appendChild(gameControls)
 
 let editorBricks = []
 let testingNewLevel
@@ -34,6 +34,7 @@ let launched
 let score = 0
 
 let ball
+let paddle
 
 let paddleX = (canvas.width-paddleWidth)/2
 let paddleVel = 0
@@ -56,14 +57,15 @@ function isInside(pos, rect) {
 
 function loadGame() {
     console.log(`Loading game for ${currentUser.name}`)
-    wrapper.appendChild(gameControls)
+    gameControls.innerText = 'Paddle Movement: Arrow Left/Right \r\n Launch Ball: Space \r\n Pause: P'
     allLevels = []
     API.fetchLevels()
     currentUser.score = 0
     ball = new Ball()
+    paddle = new Paddle()
     gameMusic.play()
     gameMusic.sound.volume = 0.5
-    Button.start()
+    Button.newLevel()
 }
 
 function gameLoop() {

@@ -11,6 +11,7 @@ class Level {
         Button.removeAllChildNodes(buttonBox)
         Button.editorControls()
         Event.clearEvents()
+        gameControls.innerText = 'Tier 1 Brick: 1 Click \r\n Tier 2 Brick: 2 Clicks'
         gameInterval = 0
         editorBricks = []
         paddleX = (canvas.width-paddleWidth)/2
@@ -54,17 +55,13 @@ class Level {
         }
     }
 
-    // resetBricks() { // LEVEL METHOD
-    //     this.bricks = levelCopies[levelNum].bricks
-    // }
-
     static resetBallAndPaddle() {
         ball.x = canvas.width/2
-        ball.y = canvas.height-ballRadius-paddleHeight-paddleFloat-hudHeight
+        ball.y = canvas.height-ball.radius-paddleHeight-paddleFloat-hudHeight
         ball.dx = Math.cos(0.5/2*Math.PI)*ball.vel  // X and Y to launch at 45 degree angle at ballVel(velocity)
         ball.dy = -(Math.sin(0.5/2*Math.PI)*ball.vel)
-        paddleX = (canvas.width-paddleWidth)/2
-        paddleVel = 0
+        paddle.x = (canvas.width-paddle.width)/2
+        paddle.vel = 0
     }
 
     static checkWin() {
@@ -85,11 +82,11 @@ class Level {
 
     static playtestNewLevel() {
         alert("Get ready to play your level!")
+        gameControls.innerText = 'Paddle Movement: Arrow Left/Right \r\n Launch Ball: Space \r\n Pause: P'
         testingNewLevel = true
         gameInterval = 0
         const packedBricks = editorBricks.filter(brick => !!brick.status === true)
         currentLevel = new Level(levelNameField.value, currentUser, packedBricks)
-        ball = new Ball()
         this.resetBallAndPaddle()
         startLoop()
     }
