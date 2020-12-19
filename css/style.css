@@ -14,7 +14,7 @@ button, input[type=submit] {
     border-radius: 20px;
 }
 
-label, span, p {
+label, span, p, ol {
     color: white;
 }
 

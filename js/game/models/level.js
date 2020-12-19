@@ -14,8 +14,8 @@ class Level {
         gameControls.innerText = 'Tier 1 Brick: 1 Click \r\n Tier 2 Brick: 2 Clicks'
         gameInterval = 0
         editorBricks = []
-        paddleX = (canvas.width-paddleWidth)/2
-        paddleVel = 0
+        paddle.x = (canvas.width-paddleWidth)/2
+        paddle.vel = 0
         this.createBrickField()
     }
 

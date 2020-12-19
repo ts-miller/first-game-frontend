@@ -31,5 +31,21 @@ function addUserToSelect(user) {
     userSelect.appendChild(newOption)
 }
 
+function addLeaderBoard() {
+    const div = document.createElement('DIV')
+    div.id = 'leaderBoard'
+    div.className = 'center'
+    const ol = document.createElement('OL')
+    const result = allUsers.sort((a, b) => b.highScore - a.highScore)
+    for (const user of result) {
+        const li = document.createElement('LI')
+        li.id = user.id
+        li.innerText = `${user.name} - Score: ${user.highScore}`
+        ol.appendChild(li)
+    }
+    div.appendChild(ol)
+    wrapper.appendChild(div)
+}
+
 loadFormListener()
 API.loadUsersInForm()

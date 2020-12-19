@@ -1,7 +1,7 @@
 class Input {
 
     static keyDownHandler(e) {
-        if (e.key == "ArrowRight") {
+        if (e.code == "ArrowRight") {
             rightPressed = true
         } else if (e.key == "ArrowLeft") {
             leftPressed = true
@@ -14,7 +14,7 @@ class Input {
                 launched = true
             }
         }
-        if (e.key == "p" && gameInterval) {
+        if (e.code == "KeyP" && gameInterval) {
             paused = !paused
             if (paused) {
                 gameMusic.sound.volume = 0.1
@@ -25,9 +25,9 @@ class Input {
     }
     
     static keyUpHandler(e) {
-        if (e.key == "ArrowRight") {
+        if (e.code == "ArrowRight") {
             rightPressed = false
-        } else if (e.key == "ArrowLeft") {
+        } else if (e.code == "ArrowLeft") {
             leftPressed = false
         }
     }
@@ -42,24 +42,24 @@ class Input {
 
     static checkForArrowPress() {
         if (rightPressed) {
-            if (paddleX + paddleWidth > canvas.width) {
-                paddleX = canvas.width - paddleWidth
-                paddleVel = 0
+            if (paddle.x + paddleWidth > canvas.width) {
+                paddle.x = canvas.width - paddleWidth
+                paddle.vel = 0
             } else {
-                (paddleVel <= paddleVelMax) ? paddleVel += paddleAcc : paddleVel = paddleVelMax
+                (paddle.vel <= paddleVelMax) ? paddle.vel += paddleAcc : paddle.vel = paddleVelMax
             }
         } else if (leftPressed) {
-            if (paddleX < 0) {
-                paddleX = 0
-                paddleVel = 0
+            if (paddle.x < 0) {
+                paddle.x = 0
+                paddle.vel = 0
             } else {
-                (paddleVel >= -paddleVelMax) ? paddleVel -= paddleAcc : paddleVel = -paddleVelMax
+                (paddle.vel >= -paddleVelMax) ? paddle.vel -= paddleAcc : paddle.vel = -paddleVelMax
             }
         } else {
-            if (paddleVel > 0) {
-                paddleVel -= paddleAcc
-            } else if (paddleVel < 0) {
-                paddleVel += paddleAcc
+            if (paddle.vel > 0) {
+                paddle.vel -= paddleAcc
+            } else if (paddle.vel < 0) {
+                paddle.vel += paddleAcc
             }
         }
     }

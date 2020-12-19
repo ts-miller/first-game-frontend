@@ -48,22 +48,7 @@ class Collision {
                 clearInterval(gameInterval)
                 loadGame()
                 if (currentUser.highScore < currentUser.score) {
-                    fetch(`${BASE_URL}/users/${currentUser.id}`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({user: {
-                            id: currentUser.id,
-                            high_score: currentUser.score
-                        }
-                        })
-                    })
-                    .then(resp => resp.json())
-                    .then(user => {
-                        debugger
-                        currentUser = new User()
-                    })
+                    API.updateHighScore()
                 }
             }
         }
@@ -71,8 +56,8 @@ class Collision {
 
     static checkBallPaddle() {
         if (ball.y + ball.dy > canvas.height-ball.radius-paddleHeight-paddleFloat-hudHeight && ball.y < canvas.height-ball.radius-paddleFloat-hudHeight) {
-            if (ball.x > paddleX && ball.x < paddleX+paddleWidth) {
-                const ballAngle = ((ball.x-paddleX)/paddleWidth-0.5)/2*Math.PI
+            if (ball.x > paddle.x && ball.x < paddle.x+paddleWidth) {
+                const ballAngle = ((ball.x-paddle.x)/paddleWidth-0.5)/2*Math.PI
                 ball.dx = Math.sin(ballAngle) * ball.vel
                 ball.dy = -Math.cos(ballAngle) * ball.vel
                 paddleHitSound.sound.cloneNode(true).play()

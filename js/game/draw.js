@@ -20,9 +20,9 @@ class Draw {
         ctx.strokeStyle = paddleColor
         ctx.lineJoin = "round";
         ctx.lineWidth = paddleRadius;
-        ctx.strokeRect(paddleX+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat-hudHeight+(paddleRadius/2), 
+        ctx.strokeRect(paddle.x+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat-hudHeight+(paddleRadius/2), 
                             paddleWidth-paddleRadius, paddleHeight-paddleRadius);
-        ctx.fillRect(paddleX+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat-hudHeight+(paddleRadius/2), 
+        ctx.fillRect(paddle.x+(paddleRadius/2), canvas.height-paddleHeight-paddleFloat-hudHeight+(paddleRadius/2), 
                             paddleWidth-paddleRadius, paddleHeight-paddleRadius);
     }
 

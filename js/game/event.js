@@ -48,9 +48,13 @@ class Event {
         API.submitLevel()
     }
 
+    static isInside(pos, rect) {
+        return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.height && pos.y > rect.y
+    }
+
     static toggleBrick(event, newBrick) {
         const mousePos = Input.getMousePos(canvas, event)
-        if (isInside(mousePos, {x: newBrick.x, y: newBrick.y, width: brickWidth, height: brickHeight})) {
+        if (this.isInside(mousePos, {x: newBrick.x, y: newBrick.y, width: brickWidth, height: brickHeight})) {
             switch(newBrick.status) {
                 case 0:
                     newBrick.status = 1

@@ -17,6 +17,7 @@ class API {
                 alert('Select or create a user')
             } else {
                 userForm.remove()
+                document.getElementById('leaderBoard').remove()
                 gameContainer.appendChild(canvas)
                 loadGame()
             }
@@ -32,7 +33,9 @@ class API {
         .then(users => {
             for(const user of users) {
                 addUserToSelect(user)
+                allUsers.push(new User(user.id, user.name, user.high_score))
             }
+            addLeaderBoard()
         })
     }
 
@@ -43,6 +46,24 @@ class API {
             for(const l of lvls) {
                 new Level(l.name, l.user, l.bricks)
             }
+        })
+    }
+
+    static updateHighScore() {
+        fetch(`${BASE_URL}/users/${currentUser.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({user: {
+                id: currentUser.id,
+                high_score: currentUser.score
+            }
+            })
+        })
+        .then(resp => resp.json())
+        .then(user => {
+            currentUser.highScore = currentUser.score
         })
     }
 

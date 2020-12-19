@@ -20,6 +20,7 @@ buttonBox.style.height = '68px'
 body.appendChild(buttonBox)
 wrapper.appendChild(gameControls)
 
+let allUsers = []
 let editorBricks = []
 let testingNewLevel
 let paused = false
@@ -36,24 +37,16 @@ let score = 0
 let ball
 let paddle
 
-let paddleX = (canvas.width-paddleWidth)/2
-let paddleVel = 0
-
-
 let rightPressed = false
 let leftPressed = false
-
-// Audio
 
 document.addEventListener("keydown", Input.keyDownHandler, false)
 document.addEventListener("keyup", Input.keyUpHandler, false)
 
 
-function isInside(pos, rect) {
-    return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.height && pos.y > rect.y
-}
-
-// Functions below stay in main.js
+// function isInside(pos, rect) {
+//     return pos.x > rect.x && pos.x < rect.x+rect.width && pos.y < rect.y+rect.height && pos.y > rect.y
+// }
 
 function loadGame() {
     console.log(`Loading game for ${currentUser.name}`)
@@ -65,12 +58,11 @@ function loadGame() {
     paddle = new Paddle()
     gameMusic.play()
     gameMusic.sound.volume = 0.5
-    Button.newLevel()
+    Button.start()
 }
 
 function gameLoop() {
     ctx.clearRect(0,0, canvas.width, canvas.height)
-    // PowerUp.runBuffs()
     Draw.ball()
     Draw.paddle()
     Collision.checkBallBrick()
@@ -81,12 +73,12 @@ function gameLoop() {
     Level.checkWin()
     if (!paused) {
         Input.checkForArrowPress()
-        paddleX += paddleVel
+        paddle.x += paddle.vel
         if (launched) {
             ball.x += ball.dx
             ball.y += ball.dy
         } else {
-            ball.x = paddleX + paddleWidth/2
+            ball.x = paddle.x + paddleWidth/2
         }
     } else {
         Draw.pause()
