@@ -1,11 +1,11 @@
-# Frontend for My First Game (With Rails backend)
+# Frontend for Galaxy (With Rails backend)
 
 Link to backend: https://github.com/ts-miller/first-game-backend
 
 <h2>Installation Instructions</h2>
 
 <ul>
-    <li>Move "First-Game-Frontend" to desired directory.</li>
+    <li>Move "Galaxy-break" to desired directory.</li>
     <li>Start your server by running `$rails s` in the backend directory.</li>
     <li>Start your frontend server with `$npx reload -b` in your frontend directory</li>
     <li>If a new browser window doesn't open, navigate to "localhost:8080" in your browser.</li>
